@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Notice of objections</title>
+      <link rel="stylesheet" href="styles/base.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   </head>
+   <body>
+      <header class="header">
+         <div class="top-ctn">
+            <div class="top-content">
+               <div class="brand">
+                  <img src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg" alt="Government of Canada">
+               </div>
+               <a href="#" class="language-switch">Français</a>
+            </div>
+         </div>
+         <div class="bottom-ctn">
+            <div class="bottom-content">
+               <a href="#">Canada.ca</a>><a href="#">Canada Revenue Agency (CRA)</a>><a href="#">Objections, appeals, disputes, and relief measures</a>
+            </div>
+         </div>
+      </header>
+      <main class="stepper">
+         <h1>Notice of objection</h1>
+         <section class="step active" id="step-0">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Before you begin</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <p>This form can be used to file an objection if you disagree with what CRA has assessed on your individual or business taxes such as an amount owing, benefits, credits, or savings plan information.</p>
+                  <fieldset id="s0q1-fieldset" data-radio-group>
+                     <legend class="required-label"> Have you received a notice of assessment, reassessment, determination or redetermination for the issue you are objecting to?</legend>
+                     <div class="group">
+                        <input type="radio" id="s0q1-op1" name="s0q1" value="Yes" data-toggle="alert-multiple-assessments">
+                        <label for="s0q1-op1"></label>
+                     </div>
+                     <div class="group">
+                        <input type="radio" id="s0q1-op2" name="s0q1" value="No" data-toggle="alert-unfiled-final">
+                        <label for="s0q1-op2"></label>
+                     </div>
+                     <div class="alert hidden" id="alert-multiple-assessments">
+                        <div class="alert-info">
+                           <div class="line"></div>
+                           <div><span class="material-icons">
+                              information
+                              </span>
+                           </div>
+                           <div class="line"></div>
+                        </div>
+                        <div class="alert-content">
+                           If you plan to object to multiple assessments, you must file a separate objection for each.
+                        </div>
+                     </div>
+                     <div class="alert hidden" id="alert-unfiled-final">
+                        <div class="alert-error">
+                           <div class="line"></div>
+                           <div><span class="material-icons">
+                              report
+                              </span>
+                           </div>
+                           <div class="line"></div>
+                        </div>
+                        <div class="alert-content">
+                           <h5>You cannot continue</h5>
+                           You must have received a notice related to your objection before you can continue with this form. 
+                        </div>
+                     </div>
+                  </fieldset>
+                  <button class="btn btn-primary next-button" type="button">Begin</button>
+               </div>
+            </div>
+         </section>
+         <section class="step" id="step-1">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Provide objection information</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-1-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <fieldset id="s1q1-fieldset" data-radio-group>
+                        <legend class="required-label"> Is this the first time an objection has been filed for this notice of assessment or determination?</legend>
+                        <div class="group">
+                           <input type="radio" id="s1q1-op1" name="s1q1" value="Yes" data-toggle="s1q4-fieldset">
+                           <label for="s1q1-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q1-op2" name="s1q1" value="No" data-toggle="s1q2-fieldset">
+                           <label for="s1q1-op2"></label>
+                        </div>
+                     
+                     </fieldset>
+                     <fieldset id="s1q2-fieldset" class="hidden" data-radio-group>
+                        <legend class="required-label"> Why do you want to file another objection?</legend>
+                        <div class="group">
+                           <input type="radio" id="s1q2-op1" name="s1q2" value="I have not heard back yet about my first one" data-toggle="alert-notheardback">
+                           <label for="s1q2-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q2-op2" name="s1q2" value="I do not agree with the decision I received" data-toggle="s1q3-fieldset">
+                           <label for="s1q2-op2"></label>
+                        </div>
+                         <div class="group">
+                           <input type="radio" id="s1q2-op3" name="s1q2" value="I have new details to add" data-toggle="alert-moretoadd">
+                           <label for="s1q2-op3"></label>
+                        </div>
+                        <div class="alert hidden" id="alert-notheardback">
+                           <div class="alert-error">
+                              <div class="line"></div>
+                              <div><span class="material-icons">
+                                 report
+                                 </span>
+                              </div>
+                              <div class="line"></div>
+                           </div>
+                           <div class="alert-content">
+                             Submitting multiple requests for the same objection will cause a delay in processing your case. Please do not submit a duplicate request. 
+                             <br>
+                             For information on CRA processing times visit: <a href="#">Processing times and complexity levels - Income tax and GST/HST objections</a>
+                           </div>
+                        </div>
+                        <div class="alert hidden" id="alert-moretoadd">
+                           <div class="alert-error">
+                              <div class="line"></div>
+                              <div><span class="material-icons">
+                                 report
+                                 </span>
+                              </div>
+                              <div class="line"></div>
+                           </div>
+                           <div class="alert-content">
+                             Additional details may only be submitted once an officer has been assigned to your case.
+                           </div>
+                        </div>
+                     </fieldset>
+                     
+                      <fieldset id="s1q3-fieldset" class="hidden" data-radio-group>
+                        <legend class="required-label"> Select the option that best applies to you.</legend>
+                        <div class="group">
+                           <input type="radio" id="s1q3-op1" name="s1q3" value="My previous objection led to a new notice that I want to object to" data-toggle="s1q5-fieldset,s1q6-fieldset">
+                           <label for="s1q3-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q3-op2" name="s1q3" value="I received a notice of confirmation" data-toggle="alert-noticeconfirmation">
+                           <label for="s1q3-op2"></label>
+                        </div>
+                         
+                        <div class="alert hidden" id="alert-noticeconfirmation">
+                           <div class="alert-error">
+                              <div class="line"></div>
+                              <div><span class="material-icons">
+                                 report
+                                 </span>
+                              </div>
+                              <div class="line"></div>
+                           </div>
+                           <div class="alert-content">
+                             If you received a notice of confirmation, you must file an appeal to the Tax Court of Canada.
+                             <br>For more information visit: <a href="#">File an appeal to the Court - Income tax or GST/HST</a>
+                           </div>
+                        </div>
+                     
+                     </fieldset>
+
+                     <fieldset id="s1q4-fieldset" class="hidden" data-radio-group>
+                        <legend class="required-label"> Are you aware of any related objections that have been filed with CRA?<br><span class="sub-label">For example, your spouse or your business partner filed an objection to the same amount on their notice.</span></legend>
+                        <div class="group">
+                           <input type="radio" id="s1q4-op1" name="s1q4" value="Yes" data-toggle="s1q5-fieldset,s1q6-fieldset">
+                           <label for="s1q4-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q4-op2" name="s1q4" value="No" data-toggle="s1q6-fieldset">
+                           <label for="s1q4-op2"></label>
+                        </div>
+                     
+                     </fieldset>
+                     <fieldset id="s1q5-fieldset" class="hidden" data-radio-group>
+                        <legend class="optional-label"> If known, provide the case number for the related objection</legend>
+                        <input class="half-width" type="text" id="s1q5-field" name="s1q5">
+                        
+                     </fieldset>
+                     <fieldset id="s1q6-fieldset" class="hidden" data-radio-group>
+                        <legend class="required-label"> Select the option that best describes you.</legend>
+                        <div class="group">
+                           <input type="radio" id="s1q6-op1" name="s1q6" value="I am completing this form for myself or my business" data-toggle="s1q7-fieldset"1>
+                           <label for="s1q6-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q6-op2" name="s1q6" value="I am an authorized or legal representative filling this out on behalf of someone else" data-toggle="s1q7-fieldset,rep-info-section">
+                           <label for="s1q6-op2"></label>
+                        </div>
+                     </fieldset>
+                     <fieldset id="s1q7-fieldset" class="hidden" data-radio-group>
+                        <legend class="required-label">Who is this request for?</legend>
+                        <div class="group">
+                           <input type="radio" id="s1q7-op1" name="s1q7" value="Myself (individual)" data-toggle="individual-info-section">
+                           <label for="s1q7-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q7-op2" name="s1q7" value="A business" data-toggle="business-info-section">
+                           <label for="s1q7-op2"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s1q7-op3" name="s1q7" value="A trust" data-toggle="trust-info-section">
+                           <label for="s1q7-op3"></label>
+                        </div>
+                     </fieldset>
+                     <div id="individual-info-section" class="hidden">
+                        <label id="ind-taxtype-fieldset" class="">
+                           Select the subject you are objecting to.</label>
+                           <select id="s1ind-taxtype" name="s1ind-taxtype">
+                              <option value=" " selected>(Select)</option>
+                              <option value="Income tax">Income tax</option>
+                              <option value="GST/HST">GST/HST credit or other provincial/territorial programs</option>
+                              <option value="CPP/EI">CPP/EI ruling</option>
+                              <option value="CCB">Canada Child Benefit (CCB) or other provincial/territorial programs</option>
+                              <option value="DTC">Disability Tax Credit (DTC)</option>
+                              <option value="FHSA">First Home Savings Account (FHSA) assessment notice</option>
+                              <option value="TFSA">Tax-Free Savings Account (TFSA)</option>
+                           </select>
+                        
+                        <fieldset id="ind-name-fieldset" class="field-row">
+                           <div>
+                              <label class="required-label" for="s1ind-fname">First name</label>
+                              <input type="text" id="s1ind-repfname" name="s1ind-fname">
+                           </div>
+                           <div>
+                              <label class="required-label" for="s1ind-lname">Last name</label>
+                              <input type="text" id="s1ind-lname" name="s1ind-lname">
+                           </div>
+                        </fieldset>
+                        
+                        <div class="half-width">
+                           <label class="required-label" for="s1ind-sin">Social insurance number (9 digits)</label>
+                           <input type="text" id="s1ind-sin" name="s1ind-sin">
+                        </div>
+                        
+                        <label class="required-label" for="s1ind-telephone">Telephone number</label>
+                        <input type="text" id="s1ind-telephone" name="s1ind-telephone">
+                     
+                    </div>
+                     <div id="business-info-section" class="hidden">
+                        
+                           <label class="required-label">Select the business type.</label>
+                           <select id="s1biz-accountype" name="s1biz-accountype" data-toggle="s1biz-bn-fieldset">
+                              <option value="TEST" selected>(Select)</option>
+                              <option value="RSFSDFSFDSFC">Corporation income tax (RC)</option>
+                              <option value="RT">GST/HST (RT)</option>
+                              <option value="RP">Payroll (RP)</option>
+                              <option value="RG">Air Travellers Security Charge (ZA)</option>
+                              <option value="RD">Excise Duty (RD)</option>
+                              <option value="RN">Excise Tax on Insurance Premiums (RN)</option>
+                              <option value="CT">Fuel Charge (CT)</option>
+                              <option value="LT">Luxury Tax (LT)</option>
+                              <option value="RU">Underused Housing Tax (RU)</option>
+                           </select>
+                
+                        <fieldset id="s1biz-bn-fieldset" class="hidden">
+                             <legend class="required-label">Business number</legend>
+                            <div class="input-wrapper ml-16px">
+                                <input id="s1-bn9"
+                                    class="BN9"
+                                    type="text"
+                                    inputmode="numeric"
+                                    pattern="[0-9]*"
+                                    maxlength="9"
+                                />
+
+                                <span class="static" id="s1biz-suffix"></span>
+
+                                <input id="s1-bn4"
+                                    class="BN4"
+                                    type="text"
+                                    inputmode="numeric"
+                                    pattern="[0-9]*"
+                                    maxlength="4"
+                                />
+                            </div>
+                        </fieldset>
+                       
+                         
+                              <label class="required-label" for="s1biz-address">Business address</label>
+                              <input type="text" id="s1biz-address" name="s1biz-address">
+               
+                      
+                              <label class="required-label" 
+                                 for="s1biz-telephone">Contact telephone number</label>
+                              <input type="text" id="s1biz-telephone" name="s1biz-telephone">
+                           
+                     
+                    </div>
+                     <div id="trust-info-section" class="hidden">   
+                        <label class="required-label" for="s1trust-trustname">Name of trust</label>
+                        <input type="text" id="s1trust-trustname" name="s1trust-trustname">
+                        
+                        <label class="required-label" for="s1trust-trustname">Trust number</label>
+                        <div class="multifield-wrapper">
+                           <div class="input-wrapper ml-16px" id="s1trust-trustnumwrapper">
+                              <div class="prefix">T</div>
+                              <input class="" type="text" id="s1trust-trustnum" name="s1trust-trustnum">
+                           </div>
+                        </div>
+
+                        <label class="required-label" for="s1trust-address">Address of trust</label>
+                        <input type="text" id="s1trust-address" name="s1trust-address">
+
+                     </div>
+                     <button class="btn btn-secondary back-button" type="button">Back</button>
+                     <button class="btn btn-primary next-button" type="button">Next</button>
+                     <button class="hidden btn btn-primary out-button" type="button" onclick="location.href='chooser.html'">Return to Overview</button>
+                  </form>
+               </div>
+            </div>
+         </section>
+         <section class="step" id="step-2">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Describe your objection</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-2-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <div id="account-panel-container">                         
+                     </div>
+                     <fieldset id="s2q1-fieldset" data-radio-group>
+                        <legend class="required-label"> Are all owners Canadian residents?
+                        </legend>
+                        <div class="group">
+                           <input type="radio" id="s2q1-op1" name="s2q1" value="Yes">
+                           <label for="s2q1-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s2q1-op2" name="s2q1" value="No">
+                           <label for="s2q1-op2"></label>
+                        </div>
+                     </fieldset>
+                     <button class="btn btn-secondary back-button" type="button">Back</button>
+                     <button class="btn btn-primary next-button" type="button">Next</button>
+                  </form>
+               </div>
+            </div>
+         </section>
+         <section class="step" id="step-3">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Representative’s information</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-3-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <br>
+                     <div id="legalrep-container">
+                        <div id="legalrep-panel-container"></div>
+                        <div class="alert" id="alert-norep">
+                           <div class="alert-warning">
+                              <div class="line"></div>
+                              <div>
+                                 <span class="material-icons">
+                                 warning
+                                 </span>
+                              </div>
+                              <div class="line"></div>
+                           </div>
+                           <div class="alert-content">
+                              Our records indicate that you are not a legal representative (for example, a director or owner) for this corporation. 
+                              Clearance certificates can only be mailed to a legal representative. You must provide information about the legal representative(s) to proceed with this request.  
+                           </div>
+                        </div>
+                        <div class="alert" id="alert-mailing">
+                           <div class="alert-info">
+                              <div class="line"></div>
+                              <div><span class="material-icons">
+                                 information
+                                 </span>
+                              </div>
+                              <div class="line"></div>
+                           </div>
+                           <div class="alert-content">
+                              The clearance certificate will be mailed to the address we have on file, as displayed above.
+                           </div>
+                        </div>
+                        <fieldset id="legalrepinfo-fieldset">
+                           <label class="required-label" for="s3-lvl3-reptel">Telephone number</label>
+                           <input class="half-width" type="text" id="s3-lvl3-reptel" name="s3-lvl3-reptel">
+                           <label class="optional-label" for="s3-lvl3-repemail" class="ml-16px">Email address<br>
+                           </label>
+                           <input class="half-width" type="text" id="s3-lvl3-repemail" name="s3-lvl3-repemail">
+                           <label class="required-label" for="s3-lvl3-reprole">Role of representative</label>                        
+                           <select id="s3-lvl3-reprole" name="s3-lvl3-reprole">
+                              <option value="" selected>(Select)</option>
+                              <option value="Owner">Owner/Registrant</option>
+                              <option value="Director">Director</option>
+                              <option value="Executor">Executor</option>
+                              <option value="Administrator">Administrator</option>
+                              <option value="Liquidator">Liquidator</option>
+                              <option value="Receiver">Receiver</option>
+                              <option value="Other">Other</option>
+                           </select>
+                        </fieldset>
+                        <fieldset id="s3q1-fieldset" data-radio-group>
+                           <legend class="required-label"> Are there any other legal representatives associated to this account?<br><span class="sub-label">For example, a co-director, co-owner, etc.   </span></legend>
+                           <div class="group">
+                              <input type="radio" id="s3q1-op1" name="s3q1" value="Yes" data-toggle="s3q2-fieldset">
+                              <label for="s3q1-op1"></label>
+                           </div>
+                           <div class="group">
+                              <input type="radio" id="s3q1-op2" name="s3q1" value="No">
+                              <label for="s3q1-op2"></label>
+                           </div>
+                        </fieldset>
+                        <fieldset id="s3q2-fieldset" class="hidden" required>
+                           <label class="required-label" for="s3q2-field">Provide information for any other legal representatives associated to this account.</label>
+                           <table id="tb-add-rep" class="table dynamic-table" cellpadding="0" cellspacing="0" required>
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                 </tr>
+                              </thead>
+                              <tbody data-placeholder="You have not added any representatives.">
+                              </tbody>
+                           </table>
+                           <button class="btn btn-secondary" data-toggleLB="addlegalrep-lightbox" type="button">
+                           <span class="material-icons">add</span>Add legal representative information
+                           </button>
+                        </fieldset>
+                     </div>
+                     <br>
+                     <button class="btn btn-secondary back-button" type="button">Back</button>
+                     <button class="btn btn-primary next-button" type="button">Next</button>
+                  </form>
+                  <div class="lightbox-container" id="addlegalrep-lightbox">
+                     <div class="lightbox">
+                        <div class="header">
+                           <h3>Add legal representative information</h3>
+                           <button data-closebtn class="btn-tertiary" type="button">
+                           <span class="material-icons">clear</span></button>
+                        </div>
+                        <div class="lightbox-content">
+                           <form id="s3-replightbox">
+                              <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                              <br>
+                              <div class="field-row">
+                                 <div>
+                                    <label class="required-label" for="s3-repfname">First name of representative</label>
+                                    <input type="text" id="s3-repfname" name="s3-repfname">
+                                 </div>
+                                 <div>
+                                    <label class="required-label" for="s3-replname">Last name of representative</label>
+                                    <input type="text" id="s3-replname" name="s3-replname">
+                                 </div>
+                              </div>
+                              <div class="field-row">
+                                 <div>
+                                    <label class="required-label" for="s3-reptel">Telephone number</label>
+                                    <input type="text" id="s3-reptel" name="s3-reptel">
+                                 </div>
+                                 <div>
+                                    <label class="optional-label ml-16px" for="s3-lvl3-repemail">Email address<br>
+                                    </label>
+                                    <input type="text" id="s3-repemail" name="s3-repemail">
+                                 </div>
+                              </div>
+                              <label class="required-label" for="s3-reprole">Role of representative</label>
+                              <select id="s3-reprole-lb" name="s3-reprole">
+                                 <option value="" selected>(Select)</option>
+                                 <option value="Owner">Owner/Registrant</option>
+                                 <option value="Director">Director</option>
+                                 <option value="Executor">Executor</option>
+                                 <option value="Administrator">Administrator</option>
+                                 <option value="Liquidator">Liquidator</option>
+                                 <option value="Receiver">Receiver</option>
+                                 <option value="Other">Other</option>
+                              </select>
+                              <br><br>
+                              <div class="" id="s3-level3-address">
+                                 <strong>The clearance certificate will be mailed to the following address:</strong><br>
+                                 <span id="s3-deceased-address"></span>
+                              </div>
+                           </form>
+                        </div>
+                        <div class="buttons">
+                           <button class="btn-primary" data-submit type="button">Save</button>
+                           <button class="btn-tertiary" data-closebtn type="button">Cancel</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="step" id="step-4">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Asset sales information</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-4-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <br>
+                     <fieldset class="ml-16px" id="s4q1-fieldset" required>
+                        <legend class="required-label" for="s4q1-field">Provide details about the sale of assets in accordance with purchase and sale agreements.
+                        </legend>
+                        <table id="tb-sales" class="table dynamic-table" cellpadding="0" cellspacing="0" required>
+                           <thead>
+                              <tr>
+                                 <th>Type of asset sold</th>
+                                 <th>Amount ($)</th>
+                                 <th>Closing date</th>
+                                 <th>Purchaser name</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody data-placeholder="You have not added any sales details.">
+                           </tbody>
+                        </table>
+                        <div class="buttons">
+                           <button class="btn-secondary close" type="button" data-togglelb="addsale-lightbox">
+                           <span class="material-icons">
+                           add
+                           </span>
+                           Add sale details</button>
+                        </div>
+                     </fieldset>
+                  </form>
+                  <div class="lightbox-container" id="addsale-lightbox">
+                     <div class="lightbox">
+                        <div class="header">
+                           <h3>Add sale details</h3>
+                           <button data-closebtn class="btn-tertiary" type="button">
+                           <span class="material-icons">clear</span></button>
+                        </div>
+                        <div class="lightbox-content">
+                           <form id="s4-saleslightbox">
+                              <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                              <br>
+                              <label class="required-label" for="s4-assettype">Type of asset sold</label>
+                              <select id="s4-assettype" name="s4-assettype">
+                                 <option value="" selected>(Select)</option>
+                                 <option value="Land">Land</option>
+                                 <option value="Buildings">Buildings</option>
+                                 <option value="Furniture and fixtures">Furniture and fixtures</option>
+                                 <option value="Machinery and equipment">Machinery and equipment</option>
+                                 <option value="Automobiles and trucks">Automobiles and trucks</option>
+                                 <option value="Inventory (goods for sale)">Inventory (goods for sale)</option>
+                                 <option value="Goodwill">Goodwill</option>
+                                 <option value="Other" data-toggle="s4-other-fieldset">Other (specify)</option>
+                              </select>
+                              <fieldset id="s4-other-fieldset" class="hidden">                         
+                                 <label class="required-label" for="s4-otherasset">Specify type of asset sold</label>
+                                 <input type="text" id="s4-otherasset" name="s4-otherasset">
+                              </fieldset>
+                              <fieldset id="s4-exactq" data-radio-group>
+                                 <legend class="required-label">Is the exact amount of the sale known?</legend>
+                                 <div class="group">
+                                    <input type="radio" id="s4-exactq-op1" name="s4-exactq" value="Yes" data-toggle="s4-exact-amounts">
+                                    <label for="s4-exactq-op1"></label>
+                                 </div>
+                                 <div class="group">
+                                    <input type="radio" id="s4-exactq-op2" name="s4-exactq" value="No" data-toggle="s4-estimate-amounts">
+                                    <label for="s4-exactq-op2"></label>
+                                 </div>
+                              </fieldset>
+                              <div class="hidden" id="s4-exact-amounts">
+                                 <fieldset class="" id="s4-exact-amount" data-radio-group>
+                                    <label class="required-label" for="s4-exactamt">Amount of the sale</label>
+                                    <div class="input-wrapper ml-16px">
+                                       <div class="prefix">
+                                          <span class="material-icons">
+                                          attach_money
+                                          </span>
+                                       </div>
+                                       <input type="text" id="s4-exact-amount-input" name="s4-exact-amount-input">
+                                    </div>
+                                 </fieldset>
+                                 <fieldset id="s4-exact-gst" data-radio-group>
+                                    <label class="required-label" for="s4-exactamt">Amount of GST/HST payable</label>
+                                    <div class="input-wrapper ml-16px">
+                                       <div class="prefix">
+                                          <span class="material-icons">
+                                          attach_money
+                                          </span>
+                                       </div>
+                                       <input type="text" id="s4-exact-gst-input" name="s4-exact-gst-input">
+                                    </div>
+                                 </fieldset>
+                              </div>
+                              <div class="hidden" id="s4-estimate-amounts">
+                                 <fieldset class="" id="s4-estimate-amount" data-radio-group>
+                                    <label class="required-label" for="s4-estimateamt">Estimate the amount of the sale</label>
+                                    <div class="input-wrapper ml-16px">
+                                       <div class="prefix">
+                                          <span class="material-icons">
+                                          attach_money
+                                          </span>
+                                       </div>
+                                       <input type="text" id="s4-estimate-amount-input" name="s4-estimate-amount-input">
+                                    </div>
+                                 </fieldset>
+                                 <fieldset id="s4-estimate-gst" data-radio-group>
+                                    <label class="required-label" for="s4-estimategst">Estimate amount of GST/HST payable</label>
+                                    <div class="input-wrapper ml-16px">
+                                       <div class="prefix">
+                                          <span class="material-icons">
+                                          attach_money
+                                          </span>
+                                       </div>
+                                       <input type="text" id="s4-estimate-gst-input" name="s4-estimate-gst-input">
+                                    </div>
+                                 </fieldset>
+                              </div>
+                              <fieldset class="" id="s4-closing-date">
+                                 <label for="s4-date-field" class="required-label">Closing date
+                                 </label>
+                                 <div class="multifield-wrapper">
+                                    <div class="input-wrapper ml-16px" id="s4-date-wrapper">
+                                       <input class="" type="text" id="s4-date-field" name="s4-date-field" placeholder="YYYY-MM-DD">
+                                       <div class="suffix">
+                                          <span id="s1-biz-type"></span>
+                                       </div>
+                                       <div class="datepicker-modal hidden"></div>
+                                    </div>
+                                 </div>
+                              </fieldset>
+                              <label class="required-label" for="s4-purchasername">Purchaser name</label>
+                              <input type="text" id="s4-purchasername" name="s4-purchasername">
+                              <label class="required-label" for="s4-purchaseradd">Purchaser mailing address<br><span class="sub-label">Example: 123 John St, Toronto ON A1A 1A1 Canada</span></label>
+                              <textarea class="ml-16px full-width" type="text" id="s4-purchaseradd" name="s4-purchaseradd"></textarea>
+                           </form>
+                        </div>
+                        <div class="buttons">
+                           <button class="btn-primary" data-submit type="button">Add</button>
+                           <button class="btn-tertiary" data-closebtn type="button">Cancel</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="btn btn-secondary back-button" type="button">Back</button>
+               <button class="btn btn-primary next-button" type="button">Next</button>
+            </div>
+         </section>
+         <section class="step" id="step-5">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Supporting documents</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-5-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <br>
+                     <div>
+                        <strong>Documents you need to provide:</strong>
+                        <ul>
+                           <li>A list of assets held by the registrant at the time of wind-up.
+                           </li>
+                           <li>A statement and plan of distribution of company assets at the date of wind-up.
+                           </li>
+                           <li>Any purchase sale agreements relating to the sale of assets held by the registrant.
+                           </li>
+                           <li>A copy of the director's or shareholder's resolution authorizing the dissolution.</li>
+                           <li>A copy of the Letter of Consent to dissolve or the Certificate of Dissolution.</li>
+                        </ul>
+                     </div>
+                     <fieldset id="s5q1-fieldset" required>
+                        <legend class="required-label">
+                           Have you submitted all the documents above?
+                        </legend>
+                        <div class="group">
+                           <input type="radio" id="s5q1-op1" name="s5q1" value="Yes" data-toggle="s5q2-fieldset, alert-infosubdoc">
+                           <label for="s5q1-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s5q1-op2" name="s5q1" value="No, but I have submitted at least one" data-toggle="s5q2-fieldset, alert-warnsubdoc-some">
+                           <label for="s5q1-op2"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s5q1-op3" name="s5q1" value="No, I have not submitted any" data-toggle="alert-warnsubdoc-all">
+                           <label for="s5q1-op3"></label>
+                        </div>
+                     </fieldset>
+                     <fieldset class="hidden" id="s5q2-fieldset" required>
+                        <legend class="required-label">
+                           How were the documents submitted?
+                        </legend>
+                        <div class="group">
+                           <input type="radio" id="s5q2-op1" name="s5q2" value="Mail or fax" data-toggle="s5q3-fieldset">
+                           <label for="s5q2-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s5q2-op2" name="s5q2" value="Electronically" data-toggle="s5q3-fieldset">
+                           <label for="s5q2-op2"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s5q2-op3" name="s5q2" value="Both" data-toggle="s5q3-fieldset">
+                           <label for="s5q2-op3"></label>
+                        </div>
+                     </fieldset>
+                     <fieldset class="hidden" id="s5q3-fieldset">
+                        <label for="s5q3-field" class="ml-16px">Provide the reference/case number(s) associated to your submission (if applicable)<br>
+                        <span class="sub-label">Separate reference/case numbers using a comma.</span>
+                        </label>
+                        <input class="half-width" type="text" id="s5q3-field" name="s5q3">
+                     </fieldset>
+                     <br>
+                     <div class="alert hidden" id="alert-warnsubdoc-some">
+                        <div class="alert-warning">
+                           <div class="line"></div>
+                           <div><span class="material-icons">
+                              warning
+                              </span>
+                           </div>
+                           <div class="line"></div>
+                        </div>
+                        <div class="alert-content">
+                           After you submit your request for a clearance certificate, you <strong>must</strong> upload the remaining supporting documents listed above using the "Submit supporting documents" button found on the confirmation page.
+                        </div>
+                     </div>
+                     <div class="alert hidden" id="alert-warnsubdoc-all">
+                        <div class="alert-warning">
+                           <div class="line"></div>
+                           <div><span class="material-icons">
+                              warning
+                              </span>
+                           </div>
+                           <div class="line"></div>
+                        </div>
+                        <div class="alert-content">
+                           After you submit your request for a clearance certificate, you <strong>must</strong> upload all supporting documents listed above using the "Submit supporting documents" button found on the confirmation page.
+                        </div>
+                     </div>
+                     <div class="alert hidden" id="alert-infosubdoc">
+                        <div class="alert-info">
+                           <div class="line"></div>
+                           <div><span class="material-icons">
+                              information
+                              </span>
+                           </div>
+                           <div class="line"></div>
+                        </div>
+                        <div class="alert-content">
+                           After you submit your request for a clearance certificate, you will be able to upload any additional supporting documents using the "Submit supporting documents" button found on the confirmation page.
+                        </div>
+                     </div>
+                  </form>
+               </div>
+               <button class="btn btn-secondary back-button" type="button">Back</button>
+               <button class="btn btn-primary next-button" type="button">Next</button>
+            </div>
+         </section>
+         <section class="step" id="step-6">
+            <div class="step-header">
+               <div class="step-number">
+                  <span class="step-icon material-icons">check</span>
+               </div>
+               <h2>Review and submit</h2>
+            </div>
+            <div class="step-content">
+               <div class="container">
+                  <form id="step-6-form">
+                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <div id="s6-review-container">
+                     </div>
+                     <fieldset id="s6q1-fieldset" required>
+                        <legend class="required-label">
+                           Declaration
+                        </legend>
+                        <div class="group">
+                           <input type="checkbox" id="s6q1-op1" name="s6q1" value="I am asking for a clearance certificate from the Minister of National Revenue. The certificate will certify that all taxes (including provincial or territorial taxes administered by the Canada Revenue Agency), Canada Pension Plan contributions, employment insurance premiums, and any related interest and penalties for which the deceased, corporation, or trust named above is liable (or can reasonably be expected to become liable) have been paid or that the Minister has accepted security for the amounts. The certificate will apply to the tax year in which the distribution is made and any previous year for which the legal representative of the deceased, corporation, or trust identified is liable (or can reasonably be expected to become liable). The distribution of all of the property will be completed as soon as possible after receiving the clearance certificate.">
+                           <label for="s6q1-op1"></label>
+                        </div>
+                     </fieldset>
+                  </form>
+               </div>
+               <button class="btn btn-secondary back-button" type="button">Back</button>
+               <button id="appsubmit-btn" class="btn btn-primary" type="button">Submit</button>
+            </div>
+         </section>
+      </main>
+      <script src="scripts.js"></script>
+   </body>
+</html>
