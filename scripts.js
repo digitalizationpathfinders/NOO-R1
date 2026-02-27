@@ -173,7 +173,6 @@ class Step1Handler {
     constructor() {
        this.businessTypeDropdown = document.getElementById("s1biz-accountype");
        this.businessTypeDropdown.addEventListener("change", ()=>{
-        console.log(this.businessTypeDropdown.value); 
         this.populateBusinessType(this.businessTypeDropdown.value)
        })
    
@@ -188,9 +187,52 @@ class Step1Handler {
 }
 class Step2Handler {
      constructor(){
-       this.datepicker = new DatepickerObj("s2-noticedate-field");
-        
+        this.datepicker = new DatepickerObj("s2-noticedate-field");
+        // Listen for the dateSelected event
+        const dateInput = document.getElementById("s2-noticedate-field");
+        dateInput.addEventListener("dateSelected", (e) => {
+           // this.handleDateSelection(e.detail.value);
+        });
     }
+
+    checkDate90Days(inputId, fieldsetId) {
+    const input = document.getElementById(inputId);
+    const fieldset = document.getElementById(fieldsetId);
+
+    if (!input || !fieldset) return;
+
+    const checkAndToggle = () => {
+        const enteredDate = new Date(input.value);
+        if (isNaN(enteredDate)) {
+            fieldset.classList.add("hidden");
+            return;
+        }
+
+        const today = new Date();
+        const diffTime = today - enteredDate; // milliseconds
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+        if (diffDays > 90) {
+            fieldset.classList.remove("hidden");
+        } else {
+            fieldset.classList.add("hidden");
+        }
+
+        // Optional: adjust Stepper height if using accordion/stepper
+        const stepContent = input.closest(".step-content");
+        if (stepContent && window.stepperInstance) {
+            window.stepperInstance.adjustMaxHeight(stepContent.closest(".step"));
+        }
+    };
+
+    // Listen for manual input (typing)
+    input.addEventListener("input", checkAndToggle);
+
+    // Listen for datepicker selection
+    input.addEventListener("dateSelected", (e) => {
+        checkAndToggle();
+    });
+}
     
 
 }
@@ -1139,13 +1181,14 @@ class ProgressiveDisclosure {
 
     }
     handleInputChange(event) {  
-               this.handleToggle(event); // Ensure Progressive Disclosure still works
+        this.handleToggle(event); // Ensure Progressive Disclosure still works
         this.outCheck(); // Check if the user should be redirected
     }
 
     handleToggle(event) {
         const input = event.target;
         const toggleTargets = input.getAttribute('data-toggle');
+                 
         
 
         // Hide all sibling toggle targets in the same group
@@ -1172,7 +1215,12 @@ class ProgressiveDisclosure {
                         }
                     });
                 }
-                
+                if(input.type === 'text')
+                {
+                    if(input.value.length == input.maxLength)
+                        console.log("its at its limit, and so am i")
+                    
+                }
                
 
                 if (input.checked) {

@@ -325,6 +325,7 @@
                </div>
             </div>
          </section>
+
          <section class="step active" id="step-2">
             <div class="step-header">
                <div class="step-number">
@@ -361,18 +362,21 @@
                         </div>
                         
                      </fieldset>
-                      <label id="s1ind-taxtype" class="required-label">
+                     <label for=s2-noticedate-field" class="required-label">
                            Date on notice of assessment or determination</label>
                      <div class="multifield-wrapper">
-                                <div class="input-wrapper ml-16px" id="s2-date-wrapper">
-                                    <input class="" type="text" id="s2-noticedate-field" name="s2-noticedate-field" placeholder="YYYY-MM-DD">
-                                    <div class="suffix">
-                                        <span class="material-icons">calendar_month</span>
-                                    </div>
-                                    <div class="datepicker-modal hidden"></div>
-                                </div>
-                               
-                            </div>
+                        <div class="input-wrapper ml-16px" id="s2-date-wrapper">
+                           <input class="" type="text" id="s2-noticedate-field" name="s2-noticedate-field" placeholder="YYYY-MM-DD" maxlength="10" data-toggle="s2-timeextension-fieldset">
+                           <div class="suffix">
+                                 <span class="material-icons">calendar_month</span>
+                           </div>
+                           <div class="datepicker-modal hidden"></div>
+                        </div>     
+                     </div>
+                     <fieldset id="s2-timeextension-fieldset" class="hidden">
+                        <label for="s2-timeextension">Explain why the date is more than 90 days old:</label>
+                        <input type="text" id="s2-timeextension">
+                     </fieldset>
               
                      <button class="btn btn-secondary back-button" type="button">Back</button>
                      <button class="btn btn-primary next-button" type="button">Next</button>

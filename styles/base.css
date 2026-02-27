@@ -821,7 +821,7 @@ textarea {
 
 .input-wrapper .suffix {
   border-left:1px solid #616161;
-  border-right:1px solid #616161;
+  /* border-right:1px solid #616161; */
   color:#989DA6;
   padding:0px 8px;
   cursor: pointer;
