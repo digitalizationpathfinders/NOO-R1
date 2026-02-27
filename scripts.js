@@ -171,26 +171,18 @@ class Stepper {
 }
 class Step1Handler {
     constructor() {
-        this.businessTypeDropdown = document.getElementById("s1biz-accountype");
-        
-         this.businessTypeDropdown.addEventListener('change', () => {
-           console.log(this)
-         });    
+       this.businessTypeDropdown = document.getElementById("s1biz-accountype");
+       this.businessTypeDropdown.addEventListener("change", ()=>{
+        console.log(this.businessTypeDropdown.value); 
+        this.populateBusinessType(this.businessTypeDropdown.value)
+       })
+   
+ 
     }
-
-    populateBusinessType(dropdown){
-       
-       // console.log(dropdown.value)
-        //  Array.prototype.forEach.call(dropdown.childNodes, child => {
-        //         if(child.selected)
-        //         {
-        //             //console.log(child)
-        //             selected = child.value;
-        //         }
-        //     })
-            
-        //var businessNumberSuffix = document.getElementById("s1biz-suffix");
-          //     businessNumberSuffix.textContent = optionSelected.value;
+    populateBusinessType(value){
+        this.businessTypeSuffix = document.getElementById("s1biz-suffix");
+        this.businessTypeSuffix.textContent = value;
+     
     }
 
 }
@@ -1190,17 +1182,17 @@ class ProgressiveDisclosure {
                     return;
                 }
                 
-                // if(input.type === "select-one"){
-                //     const options = input.childNodes;
+                if(input.type === "select-one"){
+                    const options = input.childNodes;
               
-                //     options.forEach(option => {
-                //         if(option.selected){
-                //             if(option.value != null){
-                //                  targetElement.classList.remove('hidden');
-                //             }
-                //         }
-                //     });
-                // }
+                    options.forEach(option => {
+                        if(option.selected){
+                            if(option.value != null){
+                                 targetElement.classList.remove('hidden');
+                            }
+                        }
+                    });
+                }
                 
                
 
@@ -1262,11 +1254,7 @@ class ProgressiveDisclosure {
         inputs.forEach(input => {
             if (input.type === 'radio' || input.type === 'checkbox') {
                 input.checked = false;
-            } else if (input.type === 'select'){
-               
-            }
-            
-            else {
+            } else if(input.type === 'text') {
                 input.value = '';
             }
         });
@@ -1327,7 +1315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Stepper
     const stepper = new Stepper('.step');
 
-      console.log("DOMContentLoaded option:", document.querySelector("option")?.outerHTML);
+   
 
     // Initialize ProgressiveDisclosure and pass the stepper instance
     new ProgressiveDisclosure(stepper);
@@ -1390,8 +1378,3 @@ window.addEventListener('beforeunload', (event) => {
     }
     sessionStorage.removeItem("navigatingToConfirmation"); // Reset flag after navigation
 });
-window.addEventListener("load", () => {
-  console.log("Window load option:", document.querySelector("option")?.outerHTML);
-});
-
-console.log("Immediate option:", document.querySelector("option")?.outerHTML);
