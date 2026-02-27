@@ -25,7 +25,7 @@
       </header>
       <main class="stepper">
          <h1>Notice of objection</h1>
-         <section class="step active" id="step-0">
+         <section class="step" id="step-0">
             <div class="step-header">
                <div class="step-number">
                   <span class="step-icon material-icons">check</span>
@@ -73,8 +73,10 @@
                         </div>
                      </div>
                   </fieldset>
+                  
                   <button class="btn btn-primary next-button" type="button">Begin</button>
                    <button class="hidden btn btn-primary out-button" type="button" onclick="location.href='index.html'">Return to Overview</button>
+                
                </div>
             </div>
          </section>
@@ -323,7 +325,7 @@
                </div>
             </div>
          </section>
-         <section class="step" id="step-2">
+         <section class="step active" id="step-2">
             <div class="step-header">
                <div class="step-number">
                   <span class="step-icon material-icons">check</span>
@@ -334,6 +336,43 @@
                <div class="container">
                   <form id="step-2-form">
                      <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
+                     <p>The date and tax year can be found in the top, right-hand corner of your notice. </p>
+                     <fieldset id="s2q1-fieldset" data-radio-group>
+                        <legend class="required-label">What kind of notice did you receive?</legend>
+                        <div class="group">
+                           <input type="radio" id="s2q1-op1" name="s2q1" value="Notice of assessment or reassessment " data-toggle="s1q4-fieldset">
+                           <label for="s2q1-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s2q1-op2" name="s2q1" value="Notice of determination or redetermination" data-toggle="s1q2-fieldset">
+                           <label for="s2q1-op2"></label>
+                        </div>
+                        
+                     </fieldset>
+                     <fieldset id="s2q2-fieldset" data-radio-group>
+                        <legend class="required-label">Was your notice for yourself or a third-party?</legend>
+                        <div class="group">
+                           <input type="radio" id="s2q2-op1" name="s2q2" value="Myself" data-toggle="s1q4-fieldset">
+                           <label for="s2q2-op1"></label>
+                        </div>
+                        <div class="group">
+                           <input type="radio" id="s2q2-op2" name="s2q2" value="A third-party" data-toggle="s1q2-fieldset">
+                           <label for="s2q2-op2"></label>
+                        </div>
+                        
+                     </fieldset>
+                      <label id="s1ind-taxtype" class="required-label">
+                           Date on notice of assessment or determination</label>
+                     <div class="multifield-wrapper">
+                                <div class="input-wrapper ml-16px" id="s2-date-wrapper">
+                                    <input class="" type="text" id="s2-noticedate-field" name="s2-noticedate-field" placeholder="YYYY-MM-DD">
+                                    <div class="suffix">
+                                        <span class="material-icons">calendar_month</span>
+                                    </div>
+                                    <div class="datepicker-modal hidden"></div>
+                                </div>
+                               
+                            </div>
               
                      <button class="btn btn-secondary back-button" type="button">Back</button>
                      <button class="btn btn-primary next-button" type="button">Next</button>

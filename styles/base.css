@@ -824,7 +824,7 @@ textarea {
   border-right:1px solid #616161;
   color:#989DA6;
   padding:0px 8px;
-
+  cursor: pointer;
   box-sizing: content-box !important;
   align-items: stretch;
   display: flex;

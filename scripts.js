@@ -188,31 +188,10 @@ class Step1Handler {
 }
 class Step2Handler {
      constructor(){
-        this.accountContainer = document.getElementById("account-panel-container");
-        this.account = DataManager.getData("accountInfo") || null;
-
-        this.populateAccountPanel();
+       this.datepicker = new DatepickerObj("s2-noticedate-field");
         
     }
-    populateAccountPanel(){
-
-        var shownData = { 
-            name: this.account.ownerName, 
-            businessName: this.account.name,
-            businessNumber: this.account.businessNumber
-        };
-
-        new PanelObj({
-            container: this.accountContainer,
-            title: "Business information on file",
-            data: shownData,
-            editButton: false, 
-            editIndex: null,
-            reviewPanel: false,
-            labels: ["Estate or owner name", "Business name", "Business number"]
-        })
     
-    }
 
 }
 class Step3Handler {
@@ -1295,12 +1274,14 @@ class ProgressiveDisclosure {
 
         if (isOut) {
             nextBtn.classList.add("hidden");
-            backBtn.classList.add("hidden");
+            if(backBtn)
+                backBtn.classList.add("hidden");
 
             outBtn.classList.remove("hidden");
 
         } else {
             nextBtn.classList.remove("hidden");
+            if(backBtn)
             backBtn.classList.remove("hidden");
 
             outBtn.classList.add("hidden");
