@@ -834,7 +834,7 @@ textarea {
 
 .prefix span, .suffix span 
 {
-  font-size:16px;
+  font-size:24px;
   margin:0px !important;
   vertical-align: middle !important;
   align-self:center;
@@ -847,6 +847,19 @@ textarea {
 }
 
 .search-dropdown {
+  background-color:#fff;
+  margin-left:16px;
+  position:absolute;
+  float:left;
+  box-sizing: border-box;
+  width:81%;
+  border-radius:6px;
+  border:1px solid #000;
+  padding:8px;
+}
+.search-dropdown option{
+  margin:4px;
+  cursor:pointer;
   
 }
 
@@ -1101,6 +1114,7 @@ textarea {
   padding:0 8px;
 }
 
+
 .table th {
   background-color:#26374A;
   border:1px solid#26374A;
@@ -1108,6 +1122,7 @@ textarea {
   vertical-align:top;
 
 }
+
 .table th:first-child {
   border-radius:4px 0 0 0;
   border:1px solid#26374A;
@@ -1115,6 +1130,15 @@ textarea {
 .table th:last-child {
   border-radius:0 4px 0 0;
   border:1px solid#26374A;
+}
+
+.table-min th,
+.table-min th:first-child,
+.table-min th:last-child {
+  background-color: #fff!important;
+  color:#000;  
+  border:0!important;
+  border-bottom:1px solid #888 !important;
 }
 
 .table td{
@@ -1128,6 +1152,11 @@ textarea {
 }
 .table td:last-child{
   border-right:1px solid #989DA6;
+}
+
+.table-min td {
+  border-right:0!important;
+  border-left:0!important;
 }
 
 .table tr:last-child > td:first-child {

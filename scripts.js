@@ -195,11 +195,38 @@ class Step2Handler {
         });
 
         this.lineSearchField = document.getElementById("s2q5-field");
-        this.lineSearchField.addEventListener("keyup", () => {
-            console.log("keyraise")
+        this.searchDropdown = document.getElementById("s2q5-dropdown");
+        this.lineSearchField.addEventListener("focus", () => {
+            this.searchDropdown.classList.remove("hidden")
         })
 
+        this.lineSearchField.addEventListener("keyup", () => {
+           this.filterSearch(this.lineSearchField, this.searchDropdown)
+        })
+        
+        this.taxLinesTable = new TableObj("tax-lines-tb",{
+                                allowEdit: false,
+                                allowDelete: true
+                            });
+        this.searchDropdown.addEventListener("click", (e) => {
+            const option = e.target.closest("option");
+            if (!option) return;
 
+            this.handleLineSelection(option);
+        });
+
+    }
+    handleLineSelection(option) {
+        const lineNumber = option.value;
+        const description = option.dataset.description;
+
+        this.lineSearchField.value = option.textContent;
+        this.searchDropdown.classList.add("hidden");
+
+        this.taxLinesTable.addRow({
+            line: lineNumber,
+            description: description
+        });
     }
     bindDateCondition({ inputId, targetId, conditionFn }) {
         const input = document.getElementById(inputId);
@@ -237,6 +264,20 @@ class Step2Handler {
         const diffDays = (today - entered) / (1000 * 60 * 60 * 24);
 
         return diffDays > 90;
+    }
+
+    filterSearch(input, dropdown){
+        const filter = input.value.toUpperCase();
+       
+        const option =  dropdown.getElementsByTagName("option");
+        for (let i = 0; i < option.length; i++) {
+            var txtValue = option[i].textContent || option[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            option[i].style.display = "";
+            } else {
+            option[i].style.display = "none";
+            }
+        }
     }
 
 }
@@ -675,12 +716,16 @@ class PanelObj {
 }
 
 class TableObj {
-    constructor(tableID) {
+    constructor(tableID, { allowEdit = true, allowDelete = true } = {}) {
         this.table = document.getElementById(tableID);
         this.tbody = this.table.querySelector("tbody");
         this.defaultText = this.tbody.dataset.placeholder;
         this.columnCount = this.table.querySelector("thead tr").children.length;
         this.rows = []; // Store data for easier access
+
+
+        this.allowEdit = allowEdit;
+        this.allowDelete = allowDelete;
 
         // Initialize the table with placeholder text if empty
         this.renderEmptyTable();
@@ -707,23 +752,42 @@ class TableObj {
 
         // Actions column (placeholder for buttons)
         const actionTd = document.createElement("td");
-        actionTd.innerHTML = `
-            <button type="button" class="btn-tertiary edit-btn" data-index="${rowIndex}"><span class="material-icons">edit</span>Edit</button>
-            <button type="button" class="btn-tertiary delete-btn" data-index="${rowIndex}"><span class="material-icons">close</span>Delete</button>
-        `;
+        let actionHTML = "";
+
+        if (this.allowEdit) {
+            actionHTML += `
+                <button type="button" class="btn-tertiary edit-btn" data-index="${rowIndex}">
+                    <span class="material-icons">edit</span>Edit
+                </button>
+            `;
+        }
+
+        if (this.allowDelete) {
+            actionHTML += `
+                <button type="button" class="btn-tertiary delete-btn" data-index="${rowIndex}">
+                    <span class="material-icons">close</span>Delete
+                </button>
+            `;
+        }
+
+        actionTd.innerHTML = actionHTML;
         tr.appendChild(actionTd);
 
         // Append row to table
         this.tbody.appendChild(tr);
 
         // Attach event listeners
-        actionTd.querySelector(".edit-btn").addEventListener("click", (event) => {
-            this.emitEditEvent(event.target.closest(".edit-btn").dataset.index);
-        });
+        if (this.allowEdit) {
+            actionTd.querySelector(".edit-btn")?.addEventListener("click", (event) => {
+                this.emitEditEvent(event.target.closest(".edit-btn").dataset.index);
+            });
+        }
 
-        actionTd.querySelector(".delete-btn").addEventListener("click", (event) => {
-            this.deleteRow(event.target.closest(".delete-btn").dataset.index);
-        });
+        if (this.allowDelete) {
+            actionTd.querySelector(".delete-btn")?.addEventListener("click", (event) => {
+                this.deleteRow(event.target.closest(".delete-btn").dataset.index);
+            });
+        }
 
     }
 
