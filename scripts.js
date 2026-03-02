@@ -118,12 +118,12 @@ class Stepper {
             });
         }
         if (stepNum === 3) {
-         
+
         }
         if (stepNum === 4) {
-          
+
         }
-       
+
 
         DataManager.saveData(`stepData_${stepNum}`, dataObj);
     }
@@ -164,76 +164,80 @@ class Stepper {
                 case 4:
                     this.stepHandlers[stepNum] = new Step4Handler();
                     break;
-           
+
             }
         }
     }
 }
 class Step1Handler {
     constructor() {
-       this.businessTypeDropdown = document.getElementById("s1biz-accountype");
-       this.businessTypeDropdown.addEventListener("change", ()=>{
-        this.populateBusinessType(this.businessTypeDropdown.value)
-       })
-   
- 
+        this.businessTypeDropdown = document.getElementById("s1biz-accountype");
+        this.businessTypeDropdown.addEventListener("change", () => {
+            this.populateBusinessType(this.businessTypeDropdown.value)
+        })
+
+
     }
-    populateBusinessType(value){
+    populateBusinessType(value) {
         this.businessTypeSuffix = document.getElementById("s1biz-suffix");
         this.businessTypeSuffix.textContent = value;
-     
+
     }
 
 }
 class Step2Handler {
-     constructor(){
-        this.datepicker = new DatepickerObj("s2-noticedate-field");
-        // Listen for the dateSelected event
-        const dateInput = document.getElementById("s2-noticedate-field");
-        dateInput.addEventListener("dateSelected", (e) => {
-           // this.handleDateSelection(e.detail.value);
+    constructor() {
+               
+        this.bindDateCondition({
+            inputId: "s2-noticedate-field",
+            targetId: "s2-timeextension-fieldset",
+            conditionFn: this.isMoreThan90Days.bind(this)
         });
+
+        this.lineSearchField = document.getElementById("s2q5-field");
+        this.lineSearchField.addEventListener("keyup", () => {
+            console.log("keyraise")
+        })
+
+
+    }
+    bindDateCondition({ inputId, targetId, conditionFn }) {
+        const input = document.getElementById(inputId);
+        const target = document.getElementById(targetId);
+
+       
+
+        if (!input || !target) return;
+
+         const evaluate = () => {
+            const show = this.isMoreThan90Days(input.value);
+
+            // Store the state in a data attribute
+            input.dataset.conditionMet = show ? "true" : "false";
+
+            // Dispatch a change event to trigger ProgressiveDisclosure
+            const event = new Event("change", { bubbles: true });
+
+            input.dispatchEvent(event);
+                    
+            
+        };
+
+        input.addEventListener("input", evaluate);
     }
 
-    checkDate90Days(inputId, fieldsetId) {
-    const input = document.getElementById(inputId);
-    const fieldset = document.getElementById(fieldsetId);
-
-    if (!input || !fieldset) return;
-
-    const checkAndToggle = () => {
-        const enteredDate = new Date(input.value);
-        if (isNaN(enteredDate)) {
-            fieldset.classList.add("hidden");
-            return;
-        }
+    isMoreThan90Days(dateStr) {
+        const entered = new Date(dateStr);
+       
+        if (isNaN(entered)) {
+           return false;
+        } 
 
         const today = new Date();
-        const diffTime = today - enteredDate; // milliseconds
-        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        const diffDays = (today - entered) / (1000 * 60 * 60 * 24);
 
-        if (diffDays > 90) {
-            fieldset.classList.remove("hidden");
-        } else {
-            fieldset.classList.add("hidden");
-        }
-
-        // Optional: adjust Stepper height if using accordion/stepper
-        const stepContent = input.closest(".step-content");
-        if (stepContent && window.stepperInstance) {
-            window.stepperInstance.adjustMaxHeight(stepContent.closest(".step"));
-        }
-    };
-
-    // Listen for manual input (typing)
-    input.addEventListener("input", checkAndToggle);
-
-    // Listen for datepicker selection
-    input.addEventListener("dateSelected", (e) => {
-        checkAndToggle();
-    });
-}
-    
+        return diffDays > 90;
+    }
 
 }
 class Step3Handler {
@@ -414,7 +418,7 @@ class Step4Handler {
         this.submitBtn.addEventListener('click', () => {
             sessionStorage.setItem("navigatingToConfirmation", "true");
             // Store necessary data in sessionStorage to retrieve on confirmation page
-           
+
 
             // Redirect to confirmation page
             window.location.href = "confirmation.html";
@@ -433,21 +437,21 @@ class Step4Handler {
                 stepNum: 2,
                 title: "Business information",
                 storageKey: "stepData_2",
-                labels: ["Business name", "Estate or owner name", "Business number", "Are all owners Canadian residents?"] 
+                labels: ["Business name", "Estate or owner name", "Business number", "Are all owners Canadian residents?"]
             },
             {
                 stepNum: 3,
                 title: "Representative's information",
                 storageKey: "stepData_3"
             }
-           
+
         ];
         steps.forEach(({
             stepNum,
             title,
             storageKey,
             labels
-         }) => {
+        }) => {
             let data = DataManager.getData(storageKey);
             if (!data) return; // Skip empty steps
 
@@ -455,16 +459,16 @@ class Step4Handler {
             let formattedData = {};
             let subTableData = null; // Placeholder for subtable
 
-           if (stepNum === 2) {
-           
-             
-           }
+            if (stepNum === 2) {
+
+
+            }
 
             if (stepNum === 3) {
-                
+
             }
-          
-        
+
+
 
             // Generate panel for each step
             new PanelObj({
@@ -1159,7 +1163,7 @@ class FormLightbox {
 
 class ProgressiveDisclosure {
     constructor(stepperInstance = null) {
-        this.stepper = stepperInstance; 
+        this.stepper = stepperInstance;
         this.initializeEventListeners();
         this.outConditions = [
             //step 1 selections that result in an "out"
@@ -1175,12 +1179,14 @@ class ProgressiveDisclosure {
         // Attach change event to all elements with the `data-toggle` attribute
         document.querySelectorAll('[data-toggle], input[type="radio"], input[type="checkbox"]').forEach(input => {
            
-            input.addEventListener('change', this.handleInputChange.bind(this));
+                input.addEventListener('change', this.handleInputChange.bind(this));
+            
 
         });
 
     }
-    handleInputChange(event) {  
+   
+    handleInputChange(event) {
         this.handleToggle(event); // Ensure Progressive Disclosure still works
         this.outCheck(); // Check if the user should be redirected
     }
@@ -1188,8 +1194,8 @@ class ProgressiveDisclosure {
     handleToggle(event) {
         const input = event.target;
         const toggleTargets = input.getAttribute('data-toggle');
-                 
-        
+
+
 
         // Hide all sibling toggle targets in the same group
         this.hideOtherTargets(input);
@@ -1203,25 +1209,28 @@ class ProgressiveDisclosure {
                     console.error(`Element with ID '${targetId}' not found.`);
                     return;
                 }
-                
-                if(input.type === "select-one"){
+
+                if (input.type === "select-one") {
                     const options = input.childNodes;
-              
+
                     options.forEach(option => {
-                        if(option.selected){
-                            if(option.value != null){
-                                 targetElement.classList.remove('hidden');
+                        if (option.selected) {
+                            if (option.value != null) {
+                                targetElement.classList.remove('hidden');
                             }
                         }
                     });
                 }
-                if(input.type === 'text')
-                {
-                    if(input.value.length == input.maxLength)
-                        console.log("its at its limit, and so am i")
-                    
+                if(input.type === "date"){
+                    if (input.dataset.conditionMet === "true") {
+                        targetElement.classList.remove("hidden");
+                    } else {
+                        targetElement.classList.add("hidden");
+                    }
                 }
                
+
+
 
                 if (input.checked) {
                     targetElement.classList.remove('hidden');
@@ -1281,7 +1290,7 @@ class ProgressiveDisclosure {
         inputs.forEach(input => {
             if (input.type === 'radio' || input.type === 'checkbox') {
                 input.checked = false;
-            } else if(input.type === 'text') {
+            } else if (input.type === 'text') {
                 input.value = '';
             }
         });
@@ -1322,15 +1331,15 @@ class ProgressiveDisclosure {
 
         if (isOut) {
             nextBtn.classList.add("hidden");
-            if(backBtn)
+            if (backBtn)
                 backBtn.classList.add("hidden");
 
             outBtn.classList.remove("hidden");
 
         } else {
             nextBtn.classList.remove("hidden");
-            if(backBtn)
-            backBtn.classList.remove("hidden");
+            if (backBtn)
+                backBtn.classList.remove("hidden");
 
             outBtn.classList.add("hidden");
         }
@@ -1344,7 +1353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Stepper
     const stepper = new Stepper('.step');
 
-   
+
 
     // Initialize ProgressiveDisclosure and pass the stepper instance
     new ProgressiveDisclosure(stepper);
@@ -1380,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const requiredInputs = document.querySelectorAll('.required-label');
     requiredInputs.forEach(input => {
         if (input) {
-           
+
             const asterisk = document.createElement('span');
             asterisk.textContent = '* ';
             asterisk.classList.add('label-ast');

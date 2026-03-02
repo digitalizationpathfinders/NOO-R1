@@ -694,6 +694,7 @@ select {
   padding:8px;
 }
 input[type="text"],
+textarea,
 select {
   width:100%;
   margin-left:16px;
@@ -843,6 +844,10 @@ textarea {
   margin:0;
   border:0;
   box-sizing: border-box !important;
+}
+
+.search-dropdown {
+  
 }
 
 .step-content.modal-open {

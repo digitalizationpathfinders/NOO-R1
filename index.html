@@ -364,20 +364,59 @@
                      </fieldset>
                      <label for=s2-noticedate-field" class="required-label">
                            Date on notice of assessment or determination</label>
-                     <div class="multifield-wrapper">
+                           <input class="ml-16px" type="date" id="s2-noticedate-field" placeholder="YYYY-MM-DD" data-toggle="s2-timeextension-fieldset,s2q3-fieldset,s2q4-fieldset"><BR>
+                     <!-- <div class="multifield-wrapper">
                         <div class="input-wrapper ml-16px" id="s2-date-wrapper">
+                          
                            <input class="" type="text" id="s2-noticedate-field" name="s2-noticedate-field" placeholder="YYYY-MM-DD" maxlength="10" data-toggle="s2-timeextension-fieldset">
                            <div class="suffix">
                                  <span class="material-icons">calendar_month</span>
                            </div>
                            <div class="datepicker-modal hidden"></div>
                         </div>     
-                     </div>
+                     </div> -->
                      <fieldset id="s2-timeextension-fieldset" class="hidden">
-                        <label for="s2-timeextension">Explain why the date is more than 90 days old:</label>
-                        <input type="text" id="s2-timeextension">
+                        <p>You have 90 days from the notice date to file an objection. An extension may be granted if you explain why you did not file your objection within the time limit.</p>
+                        <label for="s2-timeextension" class="required-label">Explain why you did not file your objection within the time limit. </label>
+                        <textarea id="s2-timeextension"></textarea>
                      </fieldset>
-              
+                  
+
+                     <fieldset id="s2q3-fieldset" class="hidden">
+                        <label for="s2q3-field" class="required-label">Tax year</label>
+                       <input class="ml-16px" id="s2q3-field" type="number" min="1900" max="2100">
+                     </fieldset>
+                     <fieldset id="s2q4-fieldset" class="hidden">
+                         <label for="s2q4-field" class="required-label">Province or territory for the tax year</label>
+                        <select id="s2q4-field">
+                              <option value="" selected>(Select)</option>
+                              <option value="AB">Alberta</option>
+                              <option value="BC">British Columbia</option>
+                              <option value="MB">Manitoba</option>
+                              <option value="NB">New Brunswick</option>
+                              <option value="NL">Newfoundland and Labrador</option>
+                              <option value="NT">Northwest Territories</option>
+                              <option value="NS">Nova Scotia</option>
+                              <option value="NU">Nunavut</option>
+                              <option value="ON">Ontario</option>
+                              <option value="PE">Prince Edward Island</option>
+                              <option value="QC">Quebec</option>
+                              <option value="SK">Saskatchewan</option>
+                              <option value="YT">Yukon</option>
+                        </select>
+                     </fieldset>
+
+                     <label for="s2q5-field" class="required-label">Search for the tax line that you want to object to (either by line number or keyword).</label>
+                      <input type="text" placeholder="" id="s2q5-field">
+                      <div class="search-dropdown" id="s2q5-dropdown" >
+                        <option value="3640: Total liabilities and shareholder equity">3640: Total liabilities and shareholder equity</option>
+                        <option value="3680: Net income/loss">3680: Net income/loss</option>
+                        <option value="1000: Revenue">1000: Revenue</option>
+                        <option value="2000: Expenses">2000: Expenses</option>
+                      </div>
+
+
+
                      <button class="btn btn-secondary back-button" type="button">Back</button>
                      <button class="btn btn-primary next-button" type="button">Next</button>
                   </form>
