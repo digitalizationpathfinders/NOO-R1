@@ -214,8 +214,23 @@ class Step2Handler {
 
             this.handleLineSelection(option);
         });
+        this.taxLinesTableEl = document.getElementById("tax-lines-tb");
+        this.updateTableVisibility();
+        document.addEventListener("rowDeleted", (e) => {
+            if (e.detail?.tableID === "tax-lines-tb") {
+                this.updateTableVisibility();
+            }
+});
 
     }
+    updateTableVisibility() {
+   
+    if (this.taxLinesTable.rows.length > 0) {
+        this.taxLinesTableEl.classList.remove("hidden");
+    } else {
+        this.taxLinesTableEl.classList.add("hidden");
+    }
+}
     handleLineSelection(option) {
         const lineNumber = option.value;
         const description = option.dataset.description;
@@ -227,6 +242,7 @@ class Step2Handler {
             line: lineNumber,
             description: description
         });
+        this.updateTableVisibility();
     }
     bindDateCondition({ inputId, targetId, conditionFn }) {
         const input = document.getElementById(inputId);
@@ -809,9 +825,10 @@ class TableObj {
         this.rows.splice(index, 1);
         this.refreshTable();
 
-        document.dispatchEvent(new CustomEvent("rowDeleted"));
-    }
-
+        document.dispatchEvent(new CustomEvent("rowDeleted", {
+            detail: { tableID: this.table.id }
+            }));
+        }
     refreshTable() {
         this.tbody.innerHTML = ""; // Clear the table
 
