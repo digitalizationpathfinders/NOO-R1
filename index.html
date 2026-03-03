@@ -80,7 +80,7 @@
                </div>
             </div>
          </section>
-         <section class="step" id="step-1">
+         <section class="step active" id="step-1">
             <div class="step-header">
                <div class="step-number">
                   <span class="step-icon material-icons">check</span>
@@ -208,7 +208,7 @@
                      <fieldset id="s1q7-fieldset" class="hidden" data-radio-group>
                         <legend class="required-label">Who is this request for?</legend>
                         <div class="group">
-                           <input type="radio" id="s1q7-op1" name="s1q7" value="Myself (individual)" data-toggle="individual-info-section">
+                           <input type="radio" id="s1q7-op1" name="s1q7" value="Individual" data-toggle="individual-info-section">
                            <label for="s1q7-op1"></label>
                         </div>
                         <div class="group">
@@ -220,19 +220,43 @@
                            <label for="s1q7-op3"></label>
                         </div>
                      </fieldset>
+                     <div id="rep-info-section" class="hidden">
+                        
+                        <fieldset id="rep-name-fieldset" class="field-row">
+                           <div>
+                              <label class="required-label" for="s1rep-firstname">Representative first name</label>
+                              <input type="text" id="s1rep-firstname" name="s1rep-fname">
+                           </div>
+                           <div>
+                              <label class="required-label" for="s1rep-lastname">Representative last name</label>
+                              <input type="text" id="s1rep-lastname" name="s1rep-lname">
+                           </div>
+                        </fieldset>
+                        <fieldset> 
+                           <label class="required-label" for="s1rep-telephone">Representative telephone number</label>
+                           <input class="half-width" type="text" id="s1rep-telephone" name="s1rep-telephone">
+                        </fieldset>
+                        <fieldset> 
+                           <label class="required-label" for="s1rep-repid">Rep ID</label>
+                           <input class="quarter-width" type="text" id="s1rep-repid" name="s1rep-repid" maxlength="7">
+                        </fieldset>
+                        <br>
+                          <hr>
+                     </div>
                      <div id="individual-info-section" class="hidden">
-                        <label id="s1ind-taxtype" class="required-label">
+                        <fieldset id="ind-taxtype-fieldset">
+                           <label for="s1ind-taxtype"class="required-label">
                            Select the subject you are objecting to.</label>
                            <select id="s1ind-taxtype" name="s1ind-taxtype">
                               <option value=" " selected>(Select)</option>
                               <option value="Income tax">Income tax</option>
                               <option value="GST/HST">GST/HST credit or other provincial/territorial programs</option>
-                              <option value="CPP/EI">CPP/EI ruling</option>
                               <option value="CCB">Canada Child Benefit (CCB) or other provincial/territorial programs</option>
                               <option value="DTC">Disability Tax Credit (DTC)</option>
                               <option value="FHSA">First Home Savings Account (FHSA) assessment notice</option>
                               <option value="TFSA">Tax-Free Savings Account (TFSA)</option>
                            </select>
+                        </fieldset>
                         
                         <fieldset id="ind-name-fieldset" class="field-row">
                            <div>
@@ -249,48 +273,48 @@
                            <label class="required-label" for="s1ind-sin">Social insurance number (9 digits)</label>
                            <input type="text" id="s1ind-sin" name="s1ind-sin" maxlength="9">
                         </div>
-                        
+                        <fieldset>
                         <label class="required-label" for="s1ind-telephone">Telephone number</label>
                         <input type="text" id="s1ind-telephone" name="s1ind-telephone">
+                        </fieldset>
                      
                     </div>
                      <div id="business-info-section" class="hidden">
-                           <label for="s1biz-accountype" class="required-label">Select the business type.</label>
-                     <select id="s1biz-accountype" name="s1biz-accountype" data-toggle="s1biz-bn-fieldset">
-                              <option value="" selected>(Select)</option>
-                              <option value="RC">Corporation income tax (RC)</option>
-                              <option value="RT">GST/HST (RT)</option>
-                              <option value="RP">Payroll (RP)</option>
-                              <option value="RG">Air Travellers Security Charge (ZA)</option>
-                              <option value="RD">Excise Duty (RD)</option>
-                              <option value="RN">Excise Tax on Insurance Premiums (RN)</option>
-                              <option value="CT">Fuel Charge (CT)</option>
-                              <option value="LT">Luxury Tax (LT)</option>
-                              <option value="RU">Underused Housing Tax (RU)</option>
-                           </select>
-                           <fieldset id="s1biz-bn-fieldset" class="hidden">
-                             <legend class="required-label">Business number</legend>
-                            <div class="input-wrapper ml-16px">
-                                <input id="s1-bn9"
+                        <fieldset id="s1biz-bizname-fieldset">
+                        <label for="s1biz-bizname" class="required-label">Business name</label>
+                              <input id="s1biz-bizname" name="s1biz-bizname" type="text"/>
+                        </fieldset>
+                          <fieldset id="s1biz-bn-fieldset">
+                              <label class="required-label">Business number (9 digits)</label>
+                              <input id="s1-bn9"
                                     class="BN9"
                                     type="text"
                                     inputmode="numeric"
                                     pattern="[0-9]*"
-                                    maxlength="9"
-                                />
-
-                                <span class="static" id="s1biz-suffix"></span>
-
-                                <input id="s1-bn4"
-                                    class="BN4"
-                                    type="text"
-                                    inputmode="numeric"
-                                    pattern="[0-9]*"
-                                    maxlength="4"
-                                />
-                            </div>
+                                    maxlength="9"/>
+                        </fieldset>  
+                        <label for="s1biz-accountype" class="required-label">Select the business type.</label>
+                        <select id="s1biz-accountype" name="s1biz-accountype" data-toggle="s1biz-bn4-fieldset">
+                              <option value="" selected>(Select)</option>
+                              <option value="RC" data-name="Corporation income tax">Corporation income tax (RC)</option>
+                              <option value="RT" data-name="GST/HST ">GST/HST (RT)</option>
+                              <option value="RP" data-name="Payroll">Payroll (RP)</option>
+                              <option value="ZA" data-name="Air Travellers Security Charge">Air Travellers Security Charge (ZA)</option>
+                              <option value="RD" data-name="Excise Duty">Excise Duty (RD)</option>
+                              <option value="RN" data-name="Excise Tax on Insurance Premiums">Excise Tax on Insurance Premiums (RN)</option>
+                              <option value="CT" data-name="Fuel Charge">Fuel Charge (CT)</option>
+                              <option value="LT" data-name="Luxury Tax">Luxury Tax (LT)</option>
+                              <option value="RU" data-name="Underused Housing Tax">Underused Housing Tax (RU)</option>
+                           </select>
+                         <fieldset id="s1biz-bn4-fieldset" class="hidden">
+                           <label class="required-label" for="s1biz-BN4">account number (4 digits)</label>
+                          
+                           <div class="input-wrapper ml-16px">
+                              <div class="prefix"></div>
+                              <input class="tiny-width" type="text" id="s1biz-BN4" name="s1biz-BN4" maxlength="4">
+                           </div>
+                          
                         </fieldset>
-                        
                      
                         <label class="required-label" for="s1biz-address">Business address</label>
                         <input type="text" id="s1biz-address" name="s1biz-address">
@@ -326,7 +350,7 @@
             </div>
          </section>
 
-         <section class="step active" id="step-2">
+         <section class="step" id="step-2">
             <div class="step-header">
                <div class="step-number">
                   <span class="step-icon material-icons">check</span>
@@ -373,31 +397,31 @@
                         <textarea id="s2-timeextension" name="s2timeextension"></textarea>
                      </fieldset>
                   
-
                      <fieldset id="s2q3-fieldset" class="hidden">
                         <label for="s2q3-field" class="required-label">Tax year</label>
                        <input class="ml-16px" id="s2q3-field" type="number" min="1900" max="2100" name="s2q3">
                      </fieldset>
+
                      <fieldset id="s2q4-fieldset" class="hidden">
                          <label for="s2q4-field" class="required-label">Province or territory for the tax year</label>
                         <select id="s2q4-field" name="s2q4">
                               <option value="" selected>(Select)</option>
-                              <option value="AB">Alberta</option>
-                              <option value="BC">British Columbia</option>
-                              <option value="MB">Manitoba</option>
-                              <option value="NB">New Brunswick</option>
-                              <option value="NL">Newfoundland and Labrador</option>
-                              <option value="NT">Northwest Territories</option>
-                              <option value="NS">Nova Scotia</option>
-                              <option value="NU">Nunavut</option>
-                              <option value="ON">Ontario</option>
-                              <option value="PE">Prince Edward Island</option>
-                              <option value="QC">Quebec</option>
-                              <option value="SK">Saskatchewan</option>
-                              <option value="YT">Yukon</option>
+                              <option value="Alberta">Alberta</option>
+                              <option value="British Columbia">British Columbia</option>
+                              <option value="Manitoba">Manitoba</option>
+                              <option value="New Brunswick">New Brunswick</option>
+                              <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                              <option value="Northwest Territories">Northwest Territories</option>
+                              <option value="Nova Scotia">Nova Scotia</option>
+                              <option value="Nunavut">Nunavut</option>
+                              <option value="Ontario">Ontario</option>
+                              <option value="Prince Edward Island">Prince Edward Island</option>
+                              <option value="Quebec">Quebec</option>
+                              <option value="Saskatchewan">Saskatchewan</option>
+                              <option value="Yukon">Yukon</option>
                         </select>
                      </fieldset>
-
+                     
                      <fieldset id="s2q5-fieldset" class="hidden">
                         <label for="s2q5-field" class="required-label">Search for the tax line that you want to object to (either by line number or keyword).</label>
                      
@@ -405,7 +429,6 @@
                            <div class="prefix"><span class="material-icons">search</span></div>
                            <input type="text" id="s2q5-field" name="s2q5">
                         </div>
-                     </fieldset>
                    
                  
                       
@@ -415,6 +438,7 @@
                         <option value="1000" data-description="Revenue">1000: Revenue</option>
                         <option value="2000" data-description="Expenses">2000: Expenses</option>
                       </div>
+                      </fieldset>
                       
                         <table id="tax-lines-tb" class="hidden table table-min ml-16px dynamic-table" cellpadding="0" cellspacing="0" required>
                            <thead>

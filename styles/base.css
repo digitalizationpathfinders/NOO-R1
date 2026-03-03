@@ -649,7 +649,11 @@ label span, legend span {
   width:50% !important;
 }
 .quarter-width {
-  width:25% !important;
+  width:100px !important;
+}
+.tiny-width {
+  max-width:250px;
+  width:10%;
 }
 
 .field-row {
@@ -816,7 +820,6 @@ textarea {
   box-sizing: content-box !important;
   align-items: center;
   display: flex;
-  cursor: pointer;
   max-width:20px;
 }
 

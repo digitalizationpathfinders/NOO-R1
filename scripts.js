@@ -119,7 +119,7 @@ class Stepper {
 
         // Step 2 special: include tax lines table
         if (stepNum === 2 && this.stepHandlers[2]?.taxLinesTable) {
-            dataObj["s2q5_lines"] = this.stepHandlers[2].taxLinesTable.rows;
+            dataObj["s2q5"] = this.stepHandlers[2].taxLinesTable.rows;
         }
 
         DataManager.saveData(`stepData_${stepNum}`, dataObj);
@@ -167,35 +167,54 @@ class Stepper {
 class Step1Handler {
     constructor() {
         this.businessTypeDropdown = document.getElementById("s1biz-accountype");
+        this.accountFieldset = document.getElementById("s1biz-bn4-fieldset");
+        this.accountNumberInput = document.getElementById("s1biz-BN4");
+        this.accountLabel = this.accountFieldset.querySelector("label[for='s1biz-BN4']");
+        this.prefixDiv = this.accountFieldset.querySelector(".prefix");
+
         this.businessTypeDropdown.addEventListener("change", () => {
-            this.populateBusinessType(this.businessTypeDropdown.value)
-        })
-
-
-    }
-    populateBusinessType(value) {
-        this.businessTypeSuffix = document.getElementById("s1biz-suffix");
-        this.businessTypeSuffix.textContent = value;
-
+            this.updateAccountField(this.businessTypeDropdown.value);
+        });
     }
 
+   updateAccountField(selectedValue) {
+        // Update the prefix div
+        this.prefixDiv.textContent = selectedValue || "";
+
+        // Get the data-name of the selected option
+        const selectedOption = this.businessTypeDropdown.selectedOptions[0];
+        const dataName = selectedOption ? selectedOption.dataset.name : "";
+
+        // Preserve the asterisk span if it exists
+        const asterisk = this.accountLabel.querySelector(".label-ast");
+        if (dataName) {
+            this.accountLabel.textContent = `${dataName} account number (4 digits)`;
+        } else {
+            this.accountLabel.textContent = "account number (4 digits)";
+        }
+        if (asterisk) {
+            this.accountLabel.insertBefore(asterisk, this.accountLabel.firstChild);
+        }
+
+        // Show/hide the fieldset
+        if (selectedValue) {
+            this.accountFieldset.classList.remove("hidden");
+        } else {
+            this.accountFieldset.classList.add("hidden");
+        }
+}
 }
 class Step2Handler {
     constructor() {
 
-        this.noticeDateInput = document.getElementById("s2-noticedate-field");
+        this.noticeTypeSelection = document.querySelectorAll('input[name="s2q1"]');
+        this.noticeDateField = document.getElementById("s2-noticedate-field");
         this.extensionFieldset = document.getElementById("s2-timeextension-fieldset");
-
-        this.noticeDateInput.addEventListener("change", () => {
-            this.handleNoticeDateChange();
-        });
-
+       
         this.lineSearchField = document.getElementById("s2q5-field");
         this.searchDropdown = document.getElementById("s2q5-dropdown");
-        this.lineSearchField.addEventListener("focus", () => {
-            this.searchDropdown.classList.remove("hidden")
-        })
-
+        this.taxLinesTableEl = document.getElementById("tax-lines-tb");
+       
         this.lineSearchField.addEventListener("keyup", () => {
             this.filterSearch(this.lineSearchField, this.searchDropdown)
         })
@@ -204,13 +223,30 @@ class Step2Handler {
             allowEdit: false,
             allowDelete: true
         });
+
+        //Listeners
+        document.querySelectorAll('input[name="s2q1"]').forEach(input => {
+            input.addEventListener("change", () => {
+                this.noticeDateField.value = "";
+                if (this.noticeDateField.value) {
+                    this.checkNoticeType();
+                }
+            });
+        });  
+        this.noticeDateField.addEventListener("change", () => {
+            this.handleNoticeDateChange();
+            this.checkNoticeType();
+        });
+         this.lineSearchField.addEventListener("focus", () => {
+            this.searchDropdown.classList.remove("hidden")
+        })
         this.searchDropdown.addEventListener("click", (e) => {
             const option = e.target.closest("option");
             if (!option) return;
 
             this.handleLineSelection(option);
         });
-        this.taxLinesTableEl = document.getElementById("tax-lines-tb");
+        
         this.updateTableVisibility();
         document.addEventListener("rowDeleted", (e) => {
             if (e.detail?.tableID === "tax-lines-tb") {
@@ -219,9 +255,31 @@ class Step2Handler {
         });
 
     }
+    checkNoticeType() {
+        const selected = document.querySelector('input[name="s2q1"]:checked');
+        if (!selected) return;
+       
 
+        const isDetermination =
+            selected.value === "Notice of determination or redetermination";
+
+        const provinceFieldset = document.getElementById("s2q4-fieldset");
+        const taxLineFieldset = document.getElementById("s2q5-fieldset");
+
+        if (isDetermination) {
+            provinceFieldset.classList.add("hidden");
+            taxLineFieldset.classList.add("hidden");
+             // clear province
+            const provinceSelect = document.getElementById("s2q4-field");
+            if (provinceSelect) provinceSelect.value = "";
+
+            // clear tax lines
+            this.taxLinesTable.rows = [];
+            this.taxLinesTable.refreshTable();
+        } 
+    }
     handleNoticeDateChange() {
-        const dateValue = this.noticeDateInput.value;
+        const dateValue = this.noticeDateField.value;
         const showExtension = this.isMoreThan90Days(dateValue);
 
 
@@ -254,7 +312,12 @@ class Step2Handler {
     handleLineSelection(option) {
         const lineNumber = option.value;
         const description = option.dataset.description;
-
+        const alreadyExists = this.taxLinesTable.rows.some(row => row.line === lineNumber);
+        if (alreadyExists) {
+            this.searchDropdown.classList.add("hidden");
+            this.lineSearchField.value = option.textContent;
+            return; // Stop here — don't add again
+        }
         this.lineSearchField.value = option.textContent;
         this.searchDropdown.classList.add("hidden");
 
@@ -262,6 +325,8 @@ class Step2Handler {
             line: lineNumber,
             description: description
         });
+        this.lineSearchField.value = "";
+        this.lineSearchField.blur();
         this.updateTableVisibility();
     }
 
@@ -280,6 +345,7 @@ class Step2Handler {
             }
         }
     }
+    
 
 }
 
@@ -335,9 +401,9 @@ class Step3Handler {
                 if (value == null) return;
 
                 // Only create a subtable for s2q5_lines
-                if (key === "s2q5_lines") {
+                if (key === "s2q5") {
                     subTableData = {
-                        title: "Selected Tax Lines",
+                        title: "Tax line you want to object to",
                         headers: ["Line", "Description"],
                         columns: ["line", "description"],
                         rows: value
@@ -1021,6 +1087,7 @@ class FormLightbox {
                 input.checked = false;
             } else {
                 input.value = "";
+                
             }
         });
         let hiddenEls = this.form.querySelectorAll("[data-inithidden]");
@@ -1190,6 +1257,7 @@ class ProgressiveDisclosure {
 
     hideWithSubfields(element) {
         element.classList.add("hidden");
+         
 
         // Clear all inputs inside the hidden element
         const inputs = element.querySelectorAll('input, select, textarea, option');
@@ -1197,8 +1265,11 @@ class ProgressiveDisclosure {
             if (input.type === 'radio' || input.type === 'checkbox') {
                 input.checked = false;
             } else if (input.type === 'text') {
+                console.log(input)
                 input.value = '';
+               
             }
+            
         });
 
         // Recursively hide any nested fields inside this element
