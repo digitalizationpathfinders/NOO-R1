@@ -845,6 +845,9 @@ textarea {
   border:0;
   box-sizing: border-box !important;
 }
+.search-wrapper {
+  position: relative;
+}
 
 .search-dropdown {
   background-color:#fff;
@@ -852,7 +855,8 @@ textarea {
   position:absolute;
   float:left;
   box-sizing: border-box;
-  width:81%;
+  width:100%;
+  max-width:715px;
   border-radius:6px;
   border:1px solid #000;
   padding:8px;
@@ -1139,6 +1143,10 @@ textarea {
   color:#000;  
   border:0!important;
   border-bottom:1px solid #888 !important;
+}
+
+.table-min tr:nth-child(even) {
+  background-color:#ddd;
 }
 
 .table td{

@@ -99,15 +99,14 @@ class Stepper {
         const stepForm = document.querySelector(`#step-${stepNum}-form`);
         let dataObj = {};
         const checkArr = [];
+
         if (stepForm) {
             stepForm.querySelectorAll("input, select, textarea").forEach(input => {
-
                 if (input.type === "radio") {
                     if (input.checked) {
                         dataObj[input.name] = input.value;
                     }
                 } else if (input.type === "checkbox") {
-
                     if (input.checked) {
                         checkArr.push(input.value);
                         dataObj[input.name] = checkArr;
@@ -117,13 +116,11 @@ class Stepper {
                 }
             });
         }
-        if (stepNum === 3) {
 
+        // Step 2 special: include tax lines table
+        if (stepNum === 2 && this.stepHandlers[2]?.taxLinesTable) {
+            dataObj["s2q5_lines"] = this.stepHandlers[2].taxLinesTable.rows;
         }
-        if (stepNum === 4) {
-
-        }
-
 
         DataManager.saveData(`stepData_${stepNum}`, dataObj);
     }
@@ -159,11 +156,9 @@ class Stepper {
                     this.stepHandlers[stepNum] = new Step2Handler();
                     break;
                 case 3:
-                    this.stepHandlers[stepNum] = new Step3Handler();
+                    this.stepHandlers[stepNum] = new Step3Handler(this);
                     break;
-                case 4:
-                    this.stepHandlers[stepNum] = new Step4Handler();
-                    break;
+
 
             }
         }
@@ -187,11 +182,12 @@ class Step1Handler {
 }
 class Step2Handler {
     constructor() {
-               
-        this.bindDateCondition({
-            inputId: "s2-noticedate-field",
-            targetId: "s2-timeextension-fieldset",
-            conditionFn: this.isMoreThan90Days.bind(this)
+
+        this.noticeDateInput = document.getElementById("s2-noticedate-field");
+        this.extensionFieldset = document.getElementById("s2-timeextension-fieldset");
+
+        this.noticeDateInput.addEventListener("change", () => {
+            this.handleNoticeDateChange();
         });
 
         this.lineSearchField = document.getElementById("s2q5-field");
@@ -201,13 +197,13 @@ class Step2Handler {
         })
 
         this.lineSearchField.addEventListener("keyup", () => {
-           this.filterSearch(this.lineSearchField, this.searchDropdown)
+            this.filterSearch(this.lineSearchField, this.searchDropdown)
         })
-        
-        this.taxLinesTable = new TableObj("tax-lines-tb",{
-                                allowEdit: false,
-                                allowDelete: true
-                            });
+
+        this.taxLinesTable = new TableObj("tax-lines-tb", {
+            allowEdit: false,
+            allowDelete: true
+        });
         this.searchDropdown.addEventListener("click", (e) => {
             const option = e.target.closest("option");
             if (!option) return;
@@ -220,17 +216,41 @@ class Step2Handler {
             if (e.detail?.tableID === "tax-lines-tb") {
                 this.updateTableVisibility();
             }
-});
+        });
 
     }
-    updateTableVisibility() {
-   
-    if (this.taxLinesTable.rows.length > 0) {
-        this.taxLinesTableEl.classList.remove("hidden");
-    } else {
-        this.taxLinesTableEl.classList.add("hidden");
+
+    handleNoticeDateChange() {
+        const dateValue = this.noticeDateInput.value;
+        const showExtension = this.isMoreThan90Days(dateValue);
+
+
+        if (this.extensionFieldset) {
+            this.extensionFieldset.classList.toggle("hidden", !showExtension);
+        }
     }
-}
+
+    isMoreThan90Days(dateStr) {
+        const entered = new Date(dateStr);
+
+        if (isNaN(entered)) {
+            return false;
+        }
+
+        const today = new Date();
+        const diffDays = (today - entered) / (1000 * 60 * 60 * 24);
+
+        return diffDays > 90;
+    }
+
+    updateTableVisibility() {
+
+        if (this.taxLinesTable.rows.length > 0) {
+            this.taxLinesTableEl.classList.remove("hidden");
+        } else {
+            this.taxLinesTableEl.classList.add("hidden");
+        }
+    }
     handleLineSelection(option) {
         const lineNumber = option.value;
         const description = option.dataset.description;
@@ -244,226 +264,30 @@ class Step2Handler {
         });
         this.updateTableVisibility();
     }
-    bindDateCondition({ inputId, targetId, conditionFn }) {
-        const input = document.getElementById(inputId);
-        const target = document.getElementById(targetId);
 
-       
 
-        if (!input || !target) return;
 
-         const evaluate = () => {
-            const show = this.isMoreThan90Days(input.value);
-
-            // Store the state in a data attribute
-            input.dataset.conditionMet = show ? "true" : "false";
-
-            // Dispatch a change event to trigger ProgressiveDisclosure
-            const event = new Event("change", { bubbles: true });
-
-            input.dispatchEvent(event);
-                    
-            
-        };
-
-        input.addEventListener("input", evaluate);
-    }
-
-    isMoreThan90Days(dateStr) {
-        const entered = new Date(dateStr);
-       
-        if (isNaN(entered)) {
-           return false;
-        } 
-
-        const today = new Date();
-        const diffDays = (today - entered) / (1000 * 60 * 60 * 24);
-
-        return diffDays > 90;
-    }
-
-    filterSearch(input, dropdown){
+    filterSearch(input, dropdown) {
         const filter = input.value.toUpperCase();
-       
-        const option =  dropdown.getElementsByTagName("option");
+
+        const option = dropdown.getElementsByTagName("option");
         for (let i = 0; i < option.length; i++) {
             var txtValue = option[i].textContent || option[i].innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            option[i].style.display = "";
+                option[i].style.display = "";
             } else {
-            option[i].style.display = "none";
+                option[i].style.display = "none";
             }
         }
     }
 
 }
+
+
 class Step3Handler {
-    constructor() {
-        this.userLevel = parseInt(DataManager.getData("userLevel")) || 2;
-        this.legalReps = DataManager.getData("legalReps") || [];
-        this.deceasedAddress = DataManager.getData("accountInfo").address;
-
-
-        this.repPanelContainer = document.getElementById("legalrep-panel-container");
-        this.addRepButton = document.querySelector('[data-togglelb="addlegalrep-lightbox"]');
-        this.lightbox = new FormLightbox(document.getElementById("addlegalrep-lightbox"));
-
-        this.noRepsAlert = document.getElementById("alert-norep");
-        this.mailingAlert = document.getElementById("alert-mailing");
-        this.repsQuestion = document.getElementById("s3q1-fieldset");
-        this.repsTableFieldset = document.getElementById("s3q2-fieldset");
-        this.legalRepInfoFieldset = document.getElementById("legalrepinfo-fieldset");
-        this.legalRepAddressLBDiv = document.getElementById("s3-level3-address");
-        this.legalRepAddressLBSpan = document.getElementById("s3-deceased-address");
-
-        this.repsTable = new TableObj("tb-add-rep");
-        this.firstRepAdded = false;
-
-        this.renderInitialView();
-        this.setupListeners();
-    }
-    renderInitialView() {
-
-        this.repPanelContainer.innerHTML = "";
-        this.legalRepAddressLBSpan.innerHTML = this.deceasedAddress;
-
-
-        // If userLevel 2 (no preloaded legal rep)
-        if (this.userLevel === 2) {
-            this.repsQuestion.classList.add("hidden");
-            this.repsTableFieldset.classList.remove("hidden");
-
-            const label = this.repsTableFieldset.querySelector('label');
-            label.childNodes[1].nodeValue = "Provide information for the legal representative(s) of the corporation.";
-
-            this.mailingAlert.classList.add("hidden");
-            this.legalRepInfoFieldset.classList.add("hidden");
-            //this.legalRepAddressLBDiv.classList.remove("hidden");
-        }
-
-        // If userLevel 3 and rep exists
-        if (this.userLevel === 3) {
-
-            this.firstRepAdded = true;
-            this.renderPanel(this.legalReps[0], "Legal representative's information on file");
-            this.repsQuestion.classList.remove("hidden");
-            this.noRepsAlert.classList.add("hidden");
-            this.legalRepAddressLBDiv.querySelector('strong').innerHTML = "A copy of the clearance certificate will be mailed to the following address:";
-
-        }
-
-    }
-    setupListeners() {
-        document.addEventListener("lightboxSubmitted", (event) => {
-            if (event.detail.lightboxId === "addlegalrep-lightbox") {
-                this.handleFormSubmit(event.detail.formData);
-            }
-        });
-
-        document.addEventListener("editRowEvent", (e) => {
-            if (e.detail.tableID === "tb-add-rep") {
-                this.lightbox.setEditIndex(e.detail.index);
-                this.lightbox.populateForm(e.detail.rowData);
-                this.lightbox.openLightbox();
-
-
-
-            }
-        });
-
-        document.addEventListener("rowDeleted", () => {
-            DataManager.saveData("legalReps", this.repsTable.rows);
-
-            if (this.userLevel === 2 && this.repsTable.rows.length === 0) {
-                this.legalRepAddressLBDiv.classList.remove("hidden");
-
-            }
-            if (this.repsTable.rows.length === 0) {
-                this.legalRepAddressLBDiv.querySelector('strong').innerHTML = "The clearance certificate will be mailed to the following address:";
-
-            }
-        });
-
-    }
-
-
-    handleFormSubmit(formData) {
-        const editIndex = this.lightbox.getEditIndex();
-        const newRep = this.getNewRepFromForm(formData);
-
-        this.updateRepsTable(newRep, editIndex);
-        this.handlePostRepAddUI();
-
-    }
-    getNewRepFromForm(formData) {
-        const fullName = `${formData["s3-repfname"]} ${formData["s3-replname"]}`.trim();
-        return {
-            name: fullName,
-            role: formData["s3-reprole"],
-            phone: formData["s3-reptel"],
-            email: formData["s3-repemail"]
-        };
-    }
-    updateSingleLevel3Rep() {
-        const phoneInput = document.querySelector('#s3-lvl3-reptel');
-        const emailInput = document.querySelector('#s3-lvl3-repemail');
-        const roleSelect = document.querySelector('#s3-lvl3-reprole');
-
-        if (!phoneInput || !roleSelect) return;
-
-        const phone = phoneInput.value.trim();
-        const role = roleSelect.value;
-        const email = emailInput.value;
-
-
-        this.legalReps[0].phone = phone || null;
-        this.legalReps[0].role = role || null;
-        this.legalReps[0].email = email || null;
-
-        DataManager.saveData("legalReps", this.legalReps);
-    }
-
-    updateRepsTable(newRep, editIndex) {
-        if (editIndex !== null && editIndex !== undefined && editIndex !== "") {
-            this.legalReps[editIndex] = newRep;
-            this.lightbox.clearEditIndex();
-            this.repsTable.rows[editIndex] = {
-                name: newRep.name,
-                role: newRep.role
-            };
-            this.repsTable.refreshTable();
-        } else {
-            this.legalReps.push(newRep);
-            this.repsTable.addRow({
-                name: newRep.name,
-                role: newRep.role
-            });
-        }
-        DataManager.saveData("legalReps", this.legalReps);
-    }
-    handlePostRepAddUI() {
-        if (this.userLevel === 2 && this.legalReps.length > 0) {
-            this.noRepsAlert.classList.add("hidden");
-            this.legalRepAddressLBDiv.querySelector('strong').innerHTML = "A copy of the clearance certificate will be mailed to the following address:";
-        }
-    }
-
-    renderPanel(data, title) {
-        new PanelObj({
-            container: this.repPanelContainer,
-            title,
-            data,
-            editButton: false,
-            deleteButton: false,
-            labels: ["Name", "Mailing address"]
-        });
-    }
-}
-
-class Step4Handler {
     constructor(stepper) {
         this.stepper = stepper;
-        this.reviewContainer = document.getElementById("s6-review-container");
+        this.reviewContainer = document.getElementById("s3-review-container");
         this.submitBtn = document.getElementById("appsubmit-btn");
         this.populateReview();
 
@@ -487,47 +311,49 @@ class Step4Handler {
 
         const steps = [{
                 stepNum: 1,
-                title: "Eligibility",
+                title: "Provide objection information",
                 storageKey: "stepData_1"
             },
             {
                 stepNum: 2,
-                title: "Business information",
-                storageKey: "stepData_2",
-                labels: ["Business name", "Estate or owner name", "Business number", "Are all owners Canadian residents?"]
-            },
-            {
-                stepNum: 3,
-                title: "Representative's information",
-                storageKey: "stepData_3"
-            }
+                title: "Describe your objection",
+                storageKey: "stepData_2"
 
+            }
         ];
-        steps.forEach(({
-            stepNum,
-            title,
-            storageKey,
-            labels
-        }) => {
+        steps.forEach(({ stepNum, title, storageKey, labels }) => {
             let data = DataManager.getData(storageKey);
-            if (!data) return; // Skip empty steps
+            if (!data) return; 
 
             // Replace field names with question labels
             let formattedData = {};
             let subTableData = null; // Placeholder for subtable
+            
 
-            if (stepNum === 2) {
+            Object.keys(data).forEach(key => {
+                let value = data[key];
+                if (value == null) return;
 
+                // Only create a subtable for s2q5_lines
+                if (key === "s2q5_lines") {
+                    subTableData = {
+                        title: "Selected Tax Lines",
+                        headers: ["Line", "Description"],
+                        columns: ["line", "description"],
+                        rows: value
+                    };
+                    return; // skip adding s2q5_lines to main data table
+                }
 
-            }
+                // Format dates
+                if (key.toLowerCase().includes("date")) {
+                    value = this.formatDate(value);
+                }
 
-            if (stepNum === 3) {
-
-            }
-
-
-
-            // Generate panel for each step
+                // Use proper labels
+                const label = this.getLabelForInput(key);
+                formattedData[label] = value;
+            });
             new PanelObj({
                 container: this.reviewContainer,
                 title: title,
@@ -732,7 +558,10 @@ class PanelObj {
 }
 
 class TableObj {
-    constructor(tableID, { allowEdit = true, allowDelete = true } = {}) {
+    constructor(tableID, {
+        allowEdit = true,
+        allowDelete = true
+    } = {}) {
         this.table = document.getElementById(tableID);
         this.tbody = this.table.querySelector("tbody");
         this.defaultText = this.tbody.dataset.placeholder;
@@ -826,9 +655,11 @@ class TableObj {
         this.refreshTable();
 
         document.dispatchEvent(new CustomEvent("rowDeleted", {
-            detail: { tableID: this.table.id }
-            }));
-        }
+            detail: {
+                tableID: this.table.id
+            }
+        }));
+    }
     refreshTable() {
         this.tbody.innerHTML = ""; // Clear the table
 
@@ -1259,14 +1090,14 @@ class ProgressiveDisclosure {
     initializeEventListeners() {
         // Attach change event to all elements with the `data-toggle` attribute
         document.querySelectorAll('[data-toggle], input[type="radio"], input[type="checkbox"]').forEach(input => {
-           
-                input.addEventListener('change', this.handleInputChange.bind(this));
-            
+
+            input.addEventListener('change', this.handleInputChange.bind(this));
+
 
         });
 
     }
-   
+
     handleInputChange(event) {
         this.handleToggle(event); // Ensure Progressive Disclosure still works
         this.outCheck(); // Check if the user should be redirected
@@ -1302,16 +1133,10 @@ class ProgressiveDisclosure {
                         }
                     });
                 }
-                if(input.type === "date"){
-                    if (input.dataset.conditionMet === "true") {
-                        targetElement.classList.remove("hidden");
-                    } else {
-                        targetElement.classList.add("hidden");
-                    }
+                if (input.type === "date") {
+                    targetElement.classList.remove("hidden");
+
                 }
-               
-
-
 
                 if (input.checked) {
                     targetElement.classList.remove('hidden');

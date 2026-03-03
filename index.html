@@ -341,54 +341,46 @@
                      <fieldset id="s2q1-fieldset" data-radio-group>
                         <legend class="required-label">What kind of notice did you receive?</legend>
                         <div class="group">
-                           <input type="radio" id="s2q1-op1" name="s2q1" value="Notice of assessment or reassessment " data-toggle="s1q4-fieldset">
+                           <input type="radio" id="s2q1-op1" name="s2q1" value="Notice of assessment or reassessment " data-toggle="s2q2-fieldset">
                            <label for="s2q1-op1"></label>
                         </div>
                         <div class="group">
-                           <input type="radio" id="s2q1-op2" name="s2q1" value="Notice of determination or redetermination" data-toggle="s1q2-fieldset">
+                           <input type="radio" id="s2q1-op2" name="s2q1" value="Notice of determination or redetermination" data-toggle="s2-noticedate-fieldset">
                            <label for="s2q1-op2"></label>
                         </div>
                         
                      </fieldset>
-                     <fieldset id="s2q2-fieldset" data-radio-group>
+                     <fieldset id="s2q2-fieldset" class="hidden" data-radio-group>
                         <legend class="required-label">Was your notice for yourself or a third-party?</legend>
                         <div class="group">
-                           <input type="radio" id="s2q2-op1" name="s2q2" value="Myself" data-toggle="s1q4-fieldset">
+                           <input type="radio" id="s2q2-op1" name="s2q2" value="Myself" data-toggle="s2-noticedate-fieldset">
                            <label for="s2q2-op1"></label>
                         </div>
                         <div class="group">
-                           <input type="radio" id="s2q2-op2" name="s2q2" value="A third-party" data-toggle="s1q2-fieldset">
+                           <input type="radio" id="s2q2-op2" name="s2q2" value="A third-party" data-toggle="s2-noticedate-fieldset">
                            <label for="s2q2-op2"></label>
                         </div>
                         
                      </fieldset>
-                     <label for=s2-noticedate-field" class="required-label">
-                           Date on notice of assessment or determination</label>
-                           <input class="ml-16px" type="date" id="s2-noticedate-field" placeholder="YYYY-MM-DD" data-toggle="s2-timeextension-fieldset,s2q3-fieldset,s2q4-fieldset"><BR>
-                     <!-- <div class="multifield-wrapper">
-                        <div class="input-wrapper ml-16px" id="s2-date-wrapper">
-                          
-                           <input class="" type="text" id="s2-noticedate-field" name="s2-noticedate-field" placeholder="YYYY-MM-DD" maxlength="10" data-toggle="s2-timeextension-fieldset">
-                           <div class="suffix">
-                                 <span class="material-icons">calendar_month</span>
-                           </div>
-                           <div class="datepicker-modal hidden"></div>
-                        </div>     
-                     </div> -->
+                      <fieldset id="s2-noticedate-fieldset" class="hidden">
+                        <label for="s2-noticedate-field" class="required-label">
+                              Date on notice of assessment or determination</label>
+                        <input class="ml-16px" type="date" name="s2noticedate" id="s2-noticedate-field" placeholder="YYYY-MM-DD" data-toggle="s2q3-fieldset,s2q4-fieldset,s2q5-fieldset,s2q6-fieldset"><BR>
+                        </fieldset>
                      <fieldset id="s2-timeextension-fieldset" class="hidden">
                         <p>You have 90 days from the notice date to file an objection. An extension may be granted if you explain why you did not file your objection within the time limit.</p>
                         <label for="s2-timeextension" class="required-label">Explain why you did not file your objection within the time limit. </label>
-                        <textarea id="s2-timeextension"></textarea>
+                        <textarea id="s2-timeextension" name="s2timeextension"></textarea>
                      </fieldset>
                   
 
                      <fieldset id="s2q3-fieldset" class="hidden">
                         <label for="s2q3-field" class="required-label">Tax year</label>
-                       <input class="ml-16px" id="s2q3-field" type="number" min="1900" max="2100">
+                       <input class="ml-16px" id="s2q3-field" type="number" min="1900" max="2100" name="s2q3">
                      </fieldset>
                      <fieldset id="s2q4-fieldset" class="hidden">
                          <label for="s2q4-field" class="required-label">Province or territory for the tax year</label>
-                        <select id="s2q4-field">
+                        <select id="s2q4-field" name="s2q4">
                               <option value="" selected>(Select)</option>
                               <option value="AB">Alberta</option>
                               <option value="BC">British Columbia</option>
@@ -406,12 +398,15 @@
                         </select>
                      </fieldset>
 
-                     <label for="s2q5-field" class="required-label">Search for the tax line that you want to object to (either by line number or keyword).</label>
+                     <fieldset id="s2q5-fieldset" class="hidden">
+                        <label for="s2q5-field" class="required-label">Search for the tax line that you want to object to (either by line number or keyword).</label>
+                     
+                        <div class="input-wrapper search-wrapper full-width ml-16px">
+                           <div class="prefix"><span class="material-icons">search</span></div>
+                           <input type="text" id="s2q5-field" name="s2q5">
+                        </div>
+                     </fieldset>
                    
-                           <div class="input-wrapper full-width ml-16px">
-                              <div class="prefix"><span class="material-icons">search</span></div>
-                              <input type="text" id="s2q5-field">
-                           </div>
                  
                       
                       <div class="search-dropdown hidden" id="s2q5-dropdown">
@@ -432,7 +427,10 @@
                            <tbody data-placeholder="">
                            </tbody>
                         </table>
-                 
+                 <fieldset id="s2q6-fieldset" class="hidden">
+                         <label for="s2q6-field" class="required-label">Describe the details, facts and reasons for your objection.</label>
+                        <textarea id="s2q6-field" name="s2q6"></textarea>
+                     </fieldset>
 
 
 
@@ -442,195 +440,10 @@
                </div>
             </div>
          </section>
+       
+     
+        
          <section class="step" id="step-3">
-            <div class="step-header">
-               <div class="step-number">
-                  <span class="step-icon material-icons">check</span>
-               </div>
-               <h2>Representative’s information</h2>
-            </div>
-            <div class="step-content">
-               <div class="container">
-                  <form id="step-3-form">
-                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
-                     <br>
-               
-                     <br>
-                     <button class="btn btn-secondary back-button" type="button">Back</button>
-                     <button class="btn btn-primary next-button" type="button">Next</button>
-                  </form>
-                  <div class="lightbox-container" id="addlegalrep-lightbox">
-                     <div class="lightbox">
-                        <div class="header">
-                           <h3>Add legal representative information</h3>
-                           <button data-closebtn class="btn-tertiary" type="button">
-                           <span class="material-icons">clear</span></button>
-                        </div>
-                     
-                        <div class="buttons">
-                           <button class="btn-primary" data-submit type="button">Save</button>
-                           <button class="btn-tertiary" data-closebtn type="button">Cancel</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </section>
-         <section class="step" id="step-4">
-            <div class="step-header">
-               <div class="step-number">
-                  <span class="step-icon material-icons">check</span>
-               </div>
-               <h2>Asset sales information</h2>
-            </div>
-            <div class="step-content">
-               <div class="container">
-                  <form id="step-4-form">
-                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
-                     <br>
-                     <fieldset class="ml-16px" id="s4q1-fieldset" required>
-                        <legend class="required-label" for="s4q1-field">Provide details about the sale of assets in accordance with purchase and sale agreements.
-                        </legend>
-                        <table id="tb-sales" class="table dynamic-table" cellpadding="0" cellspacing="0" required>
-                           <thead>
-                              <tr>
-                                 <th>Type of asset sold</th>
-                                 <th>Amount ($)</th>
-                                 <th>Closing date</th>
-                                 <th>Purchaser name</th>
-                                 <th>Actions</th>
-                              </tr>
-                           </thead>
-                           <tbody data-placeholder="You have not added any sales details.">
-                           </tbody>
-                        </table>
-                        <div class="buttons">
-                           <button class="btn-secondary close" type="button" data-togglelb="addsale-lightbox">
-                           <span class="material-icons">
-                           add
-                           </span>
-                           Add sale details</button>
-                        </div>
-                     </fieldset>
-                  </form>
-                 
-               </div>
-               <button class="btn btn-secondary back-button" type="button">Back</button>
-               <button class="btn btn-primary next-button" type="button">Next</button>
-            </div>
-         </section>
-         <section class="step" id="step-5">
-            <div class="step-header">
-               <div class="step-number">
-                  <span class="step-icon material-icons">check</span>
-               </div>
-               <h2>Supporting documents</h2>
-            </div>
-            <div class="step-content">
-               <div class="container">
-                  <form id="step-5-form">
-                     <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
-                     <br>
-                     <div>
-                        <strong>Documents you need to provide:</strong>
-                        <ul>
-                           <li>A list of assets held by the registrant at the time of wind-up.
-                           </li>
-                           <li>A statement and plan of distribution of company assets at the date of wind-up.
-                           </li>
-                           <li>Any purchase sale agreements relating to the sale of assets held by the registrant.
-                           </li>
-                           <li>A copy of the director's or shareholder's resolution authorizing the dissolution.</li>
-                           <li>A copy of the Letter of Consent to dissolve or the Certificate of Dissolution.</li>
-                        </ul>
-                     </div>
-                     <fieldset id="s5q1-fieldset" required>
-                        <legend class="required-label">
-                           Have you submitted all the documents above?
-                        </legend>
-                        <div class="group">
-                           <input type="radio" id="s5q1-op1" name="s5q1" value="Yes" data-toggle="s5q2-fieldset, alert-infosubdoc">
-                           <label for="s5q1-op1"></label>
-                        </div>
-                        <div class="group">
-                           <input type="radio" id="s5q1-op2" name="s5q1" value="No, but I have submitted at least one" data-toggle="s5q2-fieldset, alert-warnsubdoc-some">
-                           <label for="s5q1-op2"></label>
-                        </div>
-                        <div class="group">
-                           <input type="radio" id="s5q1-op3" name="s5q1" value="No, I have not submitted any" data-toggle="alert-warnsubdoc-all">
-                           <label for="s5q1-op3"></label>
-                        </div>
-                     </fieldset>
-                     <fieldset class="hidden" id="s5q2-fieldset" required>
-                        <legend class="required-label">
-                           How were the documents submitted?
-                        </legend>
-                        <div class="group">
-                           <input type="radio" id="s5q2-op1" name="s5q2" value="Mail or fax" data-toggle="s5q3-fieldset">
-                           <label for="s5q2-op1"></label>
-                        </div>
-                        <div class="group">
-                           <input type="radio" id="s5q2-op2" name="s5q2" value="Electronically" data-toggle="s5q3-fieldset">
-                           <label for="s5q2-op2"></label>
-                        </div>
-                        <div class="group">
-                           <input type="radio" id="s5q2-op3" name="s5q2" value="Both" data-toggle="s5q3-fieldset">
-                           <label for="s5q2-op3"></label>
-                        </div>
-                     </fieldset>
-                     <fieldset class="hidden" id="s5q3-fieldset">
-                        <label for="s5q3-field" class="ml-16px">Provide the reference/case number(s) associated to your submission (if applicable)<br>
-                        <span class="sub-label">Separate reference/case numbers using a comma.</span>
-                        </label>
-                        <input class="half-width" type="text" id="s5q3-field" name="s5q3">
-                     </fieldset>
-                     <br>
-                     <div class="alert hidden" id="alert-warnsubdoc-some">
-                        <div class="alert-warning">
-                           <div class="line"></div>
-                           <div><span class="material-icons">
-                              warning
-                              </span>
-                           </div>
-                           <div class="line"></div>
-                        </div>
-                        <div class="alert-content">
-                           After you submit your request for a clearance certificate, you <strong>must</strong> upload the remaining supporting documents listed above using the "Submit supporting documents" button found on the confirmation page.
-                        </div>
-                     </div>
-                     <div class="alert hidden" id="alert-warnsubdoc-all">
-                        <div class="alert-warning">
-                           <div class="line"></div>
-                           <div><span class="material-icons">
-                              warning
-                              </span>
-                           </div>
-                           <div class="line"></div>
-                        </div>
-                        <div class="alert-content">
-                           After you submit your request for a clearance certificate, you <strong>must</strong> upload all supporting documents listed above using the "Submit supporting documents" button found on the confirmation page.
-                        </div>
-                     </div>
-                     <div class="alert hidden" id="alert-infosubdoc">
-                        <div class="alert-info">
-                           <div class="line"></div>
-                           <div><span class="material-icons">
-                              information
-                              </span>
-                           </div>
-                           <div class="line"></div>
-                        </div>
-                        <div class="alert-content">
-                           After you submit your request for a clearance certificate, you will be able to upload any additional supporting documents using the "Submit supporting documents" button found on the confirmation page.
-                        </div>
-                     </div>
-                  </form>
-               </div>
-               <button class="btn btn-secondary back-button" type="button">Back</button>
-               <button class="btn btn-primary next-button" type="button">Next</button>
-            </div>
-         </section>
-         <section class="step" id="step-6">
             <div class="step-header">
                <div class="step-number">
                   <span class="step-icon material-icons">check</span>
@@ -639,17 +452,17 @@
             </div>
             <div class="step-content">
                <div class="container">
-                  <form id="step-6-form">
+                  <form id="step-3-form">
                      <div class="required">Fields marked with asterisk (<span class="ast">*</span>) are required.</div>
-                     <div id="s6-review-container">
+                     <div id="s3-review-container">
                      </div>
-                     <fieldset id="s6q1-fieldset" required>
+                     <fieldset id="s3q1-fieldset" required>
                         <legend class="required-label">
                            Declaration
                         </legend>
                         <div class="group">
-                           <input type="checkbox" id="s6q1-op1" name="s6q1" value="I am asking for a clearance certificate from the Minister of National Revenue. The certificate will certify that all taxes (including provincial or territorial taxes administered by the Canada Revenue Agency), Canada Pension Plan contributions, employment insurance premiums, and any related interest and penalties for which the deceased, corporation, or trust named above is liable (or can reasonably be expected to become liable) have been paid or that the Minister has accepted security for the amounts. The certificate will apply to the tax year in which the distribution is made and any previous year for which the legal representative of the deceased, corporation, or trust identified is liable (or can reasonably be expected to become liable). The distribution of all of the property will be completed as soon as possible after receiving the clearance certificate.">
-                           <label for="s6q1-op1"></label>
+                           <input type="checkbox" id="s3q1-op1" name="s3q1" value="I am asking for a clearance certificate from the Minister of National Revenue. The certificate will certify that all taxes (including provincial or territorial taxes administered by the Canada Revenue Agency), Canada Pension Plan contributions, employment insurance premiums, and any related interest and penalties for which the deceased, corporation, or trust named above is liable (or can reasonably be expected to become liable) have been paid or that the Minister has accepted security for the amounts. The certificate will apply to the tax year in which the distribution is made and any previous year for which the legal representative of the deceased, corporation, or trust identified is liable (or can reasonably be expected to become liable). The distribution of all of the property will be completed as soon as possible after receiving the clearance certificate.">
+                           <label for="s3q1-op1"></label>
                         </div>
                      </fieldset>
                   </form>
