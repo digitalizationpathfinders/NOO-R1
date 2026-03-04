@@ -1260,14 +1260,16 @@ class ProgressiveDisclosure {
          
 
         // Clear all inputs inside the hidden element
-        const inputs = element.querySelectorAll('input, select, textarea, option');
+        const inputs = element.querySelectorAll('input, select, select-one, textarea, option');
         inputs.forEach(input => {
             if (input.type === 'radio' || input.type === 'checkbox') {
                 input.checked = false;
             } else if (input.type === 'text') {
-                console.log(input)
                 input.value = '';
                
+            }
+            else if (input.type === 'select-one') {
+                input.selectedIndex = 0;
             }
             
         });

@@ -165,14 +165,18 @@ header {
   
   
 }
+.top-content {
+  justify-content: space-between!important;
+}
 .top-content, .bottom-content {
-    display: flex;
+  display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
   margin-left:auto;
   margin-right:auto;
-  justify-content: space-between;
- max-width:840px;
+  justify-content: left;
+  max-width:840px;
+  padding:6px;
 }
 
 header div img {
