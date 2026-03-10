@@ -349,7 +349,6 @@ class Step2Handler {
 
 }
 
-
 class Step3Handler {
     constructor(stepper) {
         this.stepper = stepper;
@@ -484,6 +483,34 @@ class Step3Handler {
     }
 
 
+}
+
+class CharacterCounter {
+    constructor(textarea) {
+        this.textarea = textarea;
+        this.maxLength = parseInt(textarea.dataset.maxlength, 10) || null;
+
+        this.counterEl = document.createElement("div");
+        this.counterEl.classList.add("char-counter");
+
+        textarea.insertAdjacentElement("afterend", this.counterEl);
+
+        this.updateCount();
+
+        textarea.addEventListener("input", () => {
+            this.updateCount();
+        });
+    }
+
+    updateCount() {
+        const currentLength = this.textarea.value.length;
+
+        if (this.maxLength) {
+            this.counterEl.textContent = `${currentLength} / ${this.maxLength} characters`;
+        } else {
+            this.counterEl.textContent = `${currentLength} characters`;
+        }
+    }
 }
 
 class PanelObj {
@@ -1362,6 +1389,10 @@ document.addEventListener('DOMContentLoaded', () => {
             label.textContent = input.value;
 
         }
+    });
+
+    document.querySelectorAll("textarea[data-maxlength]").forEach(textarea => {
+        new CharacterCounter(textarea);
     });
 
     //Add asterisks to all required fields

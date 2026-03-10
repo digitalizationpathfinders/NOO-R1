@@ -241,7 +241,7 @@
                            <input class="half-width" type="text" id="s1rep-telephone" name="s1rep-telephone">
                         </fieldset>
                         <fieldset> 
-                           <label class="required-label" for="s1rep-repid">Rep ID</label>
+                           <label class="ml-16px" for="s1rep-repid">Rep ID</label>
                            <input class="quarter-width" type="text" id="s1rep-repid" name="s1rep-repid" maxlength="7">
                         </fieldset>
                         <br>
@@ -393,9 +393,14 @@
                            <label for="s2q2-op1"></label>
                         </div>
                         <div class="group">
-                           <input type="radio" id="s2q2-op2" name="s2q2" value="A third-party" data-toggle="s2-noticedate-fieldset">
+                           <input type="radio" id="s2q2-op2" name="s2q2" value="A third-party" data-toggle="s2-noticedate-fieldset,s2-thirdpartyref-fieldset">
                            <label for="s2q2-op2"></label>
                         </div>
+                        
+                     </fieldset>
+                      <fieldset id="s2-thirdpartyref-fieldset" class="hidden">
+                        <label class="required-label" for="s2-thirdpartyref">Reference number on third-party assessment</label>
+                        <input type="text" class="half-width" name="thirdpartyref" id="thirdpartyref">
                         
                      </fieldset>
                       <fieldset id="s2-noticedate-fieldset" class="hidden">
@@ -406,7 +411,7 @@
                      <fieldset id="s2-timeextension-fieldset" class="hidden">
                         <p>You have 90 days from the notice date to file an objection. An extension may be granted if you explain why you did not file your objection within the time limit.</p>
                         <label for="s2-timeextension" class="required-label">Explain why you did not file your objection within the time limit. </label>
-                        <textarea id="s2-timeextension" name="s2timeextension"></textarea>
+                        <textarea id="s2-timeextension" name="s2timeextension" ></textarea>
                      </fieldset>
                   
                      <fieldset id="s2q3-fieldset" class="hidden">
@@ -465,7 +470,7 @@
                         </table>
                  <fieldset id="s2q6-fieldset" class="hidden">
                          <label for="s2q6-field" class="required-label">Describe the details, facts and reasons for your objection.</label>
-                        <textarea id="s2q6-field" name="s2q6"></textarea>
+                        <textarea id="s2q6-field" name="s2q6" data-maxlength="2500" maxlength="2500"></textarea>
                      </fieldset>
 
 
