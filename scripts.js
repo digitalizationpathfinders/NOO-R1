@@ -162,6 +162,15 @@ class Stepper {
 
             }
         }
+        if(stepNum == 2){
+            
+            this.stepHandlers[stepNum].onActivate();
+        }
+          
+
+        
+ 
+
     }
 }
 class Step1Handler {
@@ -214,6 +223,23 @@ class Step2Handler {
         this.lineSearchField = document.getElementById("s2q5-field");
         this.searchDropdown = document.getElementById("s2q5-dropdown");
         this.taxLinesTableEl = document.getElementById("tax-lines-tb");
+
+        this.taxLineLists = {
+            Individual: [
+                { value: "15000", description: "Total income" },
+                { value: "23600", description: "Net federal tax" },
+                { value: "12000", description: "Employment income" }
+            ],
+            Business: [
+                { value: "3640", description: "Total liabilities and shareholder equity" },
+                { value: "3680", description: "Net income/loss" },
+                { value: "1000", description: "Revenue" }
+            ],
+            Trust: [
+                { value: "1", description: "Trust income" },
+                { value: "10", description: "Taxable capital gains" }
+            ]
+        };
        
         this.lineSearchField.addEventListener("keyup", () => {
             this.filterSearch(this.lineSearchField, this.searchDropdown)
@@ -223,6 +249,8 @@ class Step2Handler {
             allowEdit: false,
             allowDelete: true
         });
+
+     
 
         //Listeners
         document.querySelectorAll('input[name="s2q1"]').forEach(input => {
@@ -254,6 +282,43 @@ class Step2Handler {
             }
         });
 
+    }
+    onActivate() {
+        console.log("on activate")
+        this.clearTaxLinesTable();
+        this.populateTaxLines();
+    }
+    
+    clearTaxLinesTable() {
+        this.taxLinesTable.rows = [];
+        this.taxLinesTable.refreshTable();
+        this.updateTableVisibility();
+        if (this.lineSearchField) this.lineSearchField.value = "";
+        if (this.searchDropdown) this.searchDropdown.classList.add("hidden");
+    }
+
+    populateTaxLines() {
+        const dropdown = this.searchDropdown;
+        dropdown.innerHTML = ""; // clear existing
+
+        // Get user type from session storage
+        const step1 = DataManager.getData("stepData_1");
+        const normalized = {
+            "A business": "Business",
+            "A trust": "Trust",
+            "Individual": "Individual"
+            };
+        const userType = normalized[step1?.s1q7];
+       
+        if (!userType || !this.taxLineLists[userType]) return;
+
+        this.taxLineLists[userType].forEach(item => {
+            const opt = document.createElement("option");
+            opt.value = item.value;
+            opt.dataset.description = item.description;
+            opt.textContent = `${item.value}: ${item.description}`;
+            dropdown.appendChild(opt);
+        });
     }
     checkNoticeType() {
         const selected = document.querySelector('input[name="s2q1"]:checked');
