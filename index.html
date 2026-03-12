@@ -252,7 +252,7 @@
                            <label for="s1ind-taxtype"class="required-label">
                            Select the subject you are objecting to.</label>
                            <select id="s1ind-taxtype" name="s1ind-taxtype">
-                              <option value=" " selected>(Select)</option>
+                              <option value="" selected>(Select)</option>
                               <option value="Income tax">Income tax</option>
                               <option value="GST/HST">GST/HST credit or other provincial/territorial programs</option>
                               <option value="CCB">Canada Child Benefit (CCB) or other provincial/territorial programs</option>
@@ -290,10 +290,11 @@
                      <div id="business-info-section" class="hidden">
                         
                           <fieldset id="s1biz-bn-fieldset">
-                              <label class="required-label">Business number (9 digits)</label>
-                              <input id="s1-bn9"
+                              <label for="s1biz-bn9" class="required-label">Business number (9 digits)</label>
+                              <input id="s1biz-bn9"
                                     class="BN9"
                                     type="text"
+                                    name="s1biz-bn9"
                                     inputmode="numeric"
                                     pattern="[0-9]*"
                                     maxlength="9"/>
@@ -406,7 +407,7 @@
                       <fieldset id="s2-noticedate-fieldset" class="hidden">
                         <label for="s2-noticedate-field" class="required-label">
                               Date on notice of assessment or determination</label>
-                        <input class="ml-16px" type="date" name="s2noticedate" id="s2-noticedate-field" placeholder="YYYY-MM-DD" data-toggle="s2q3-fieldset,s2q4-fieldset,s2q5-fieldset,s2q6-fieldset"><BR>
+                        <input class="ml-16px" type="date" name="s2noticedate" id="s2-noticedate-field" placeholder="YYYY-MM-DD" data-toggle="s2-date-fields,s2q4-fieldset,s2q5-fieldset,s2q6-fieldset"><BR>
                         </fieldset>
                      <fieldset id="s2-timeextension-fieldset" class="hidden">
                         <p>You have 90 days from the notice date to file an objection. An extension may be granted if you explain why you did not file your objection within the time limit.</p>
@@ -414,14 +415,20 @@
                         <textarea id="s2-timeextension" name="s2timeextension" ></textarea>
                      </fieldset>
                   
-                     <fieldset id="s2q3-fieldset" class="hidden">
-                        <label for="s2q3-field" class="required-label">Tax year(s)</label>
-                        <div class="ml-16px vertical-stack" id="tax-year-container">
-                           <input class="quarter-width" id="s2q3-field" type="number" min="1900" max="2100" name="s2q3">
-                        </div>
-                      <br>
-                        <button class="btn ml-16px btn-secondary" type="button" id="add-tax-year-btn"><span class="material-icons">add_circle</span> Add another tax year</button>
-                     </fieldset>
+                     <div class="hidden" id="s2-date-fields">
+                        <fieldset id="tax-years-fieldset" class="hidden">
+                           <label for="s2q3-field" class="required-label">Tax year(s)</label>
+                           <div class="ml-16px vertical-stack" id="tax-years-container">
+                              <input class="quarter-width" id="s2q3-field" type="number" min="1900" max="2100" name="s2q3" data-array="true">
+                           </div>
+                           <button class="btn ml-16px btn-secondary" type="button" id="add-tax-year-btn"><span class="material-icons">add_circle</span> Add another tax year</button>
+                        </fieldset>
+                        <fieldset id="fiscal-period-fieldset" class="hidden">
+                           <label for="fiscal-period-end" class="required-label">Fiscal period end</label>
+                              <input type="date" id="fiscal-period-end" name="s2_fiscalperiod" class="ml-16px">
+
+                        </fieldset>
+                     </div>
                      
 
                      <fieldset id="s2q4-fieldset" class="hidden">

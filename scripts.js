@@ -101,27 +101,52 @@ class Stepper {
         const checkArr = [];
 
         if (stepForm) {
-            stepForm.querySelectorAll("input, select, textarea").forEach(input => {
-                if (input.type === "radio") {
-                    if (input.checked) {
+            const allInputs = stepForm.querySelectorAll("input, select, textarea");
+            allInputs.forEach(input => {
+                if (input.closest('.hidden')) return;
+
+                const name = input.name;
+                if(!name) return;
+
+                if(input.dataset.array === "true") {
+                    if (!dataObj[name]) dataObj[name] = [];
+                        if (input.value !== "") 
+                            dataObj[name].push(input.value);
+                }
+                
+                else {
+                    if (input.type === "radio") {
+                        if (input.checked) {
+                            dataObj[input.name] = input.value;
+                        }
+                    } else if (input.type === "checkbox") {
+                        if (input.checked) {
+                            checkArr.push(input.value);
+                            dataObj[input.name] = checkArr;
+                        }
+                    } else {
                         dataObj[input.name] = input.value;
                     }
-                } else if (input.type === "checkbox") {
-                    if (input.checked) {
-                        checkArr.push(input.value);
-                        dataObj[input.name] = checkArr;
-                    }
-                } else {
-                    dataObj[input.name] = input.value;
                 }
+                
             });
+            
+            Object.keys(dataObj).forEach(k => {
+                if (Array.isArray(dataObj[k]) && dataObj[k].length === 0) {
+                    delete dataObj[k];
+                }
+                });
+
         }
 
         // Step 2 special: include tax lines table
-        if (stepNum === 2 && this.stepHandlers[2]?.taxLinesTable) {
-            dataObj["s2q5"] = this.stepHandlers[2].taxLinesTable.rows;
+        if (stepNum === 2) {
+            if(this.stepHandlers[2]?.taxLinesTable) {
+                dataObj["s2q5"] = this.stepHandlers[2].taxLinesTable.rows;
+            }
+            
         }
-
+    
         DataManager.saveData(`stepData_${stepNum}`, dataObj);
     }
 
@@ -219,10 +244,23 @@ class Step2Handler {
         this.noticeTypeSelection = document.querySelectorAll('input[name="s2q1"]');
         this.noticeDateField = document.getElementById("s2-noticedate-field");
         this.extensionFieldset = document.getElementById("s2-timeextension-fieldset");
-       
+
+        this.userType = this.getUserType();
+    
+        this.taxYearsFieldset = document.getElementById("tax-years-fieldset");
+        this.fiscalFieldset = document.getElementById("fiscal-period-fieldset");
         this.lineSearchField = document.getElementById("s2q5-field");
         this.searchDropdown = document.getElementById("s2q5-dropdown");
         this.taxLinesTableEl = document.getElementById("tax-lines-tb");
+
+        this.taxYearsContainer = document.getElementById("tax-years-container");
+        this.addTaxYearBtn = document.getElementById("add-tax-year-btn");
+        this.taxYearCount = 1;
+
+        if (this.addTaxYearBtn) {
+            this.addTaxYearBtn.addEventListener("click", () => this.addTaxYearInput());
+        }
+        
 
         this.taxLineLists = {
             Individual: [
@@ -283,10 +321,50 @@ class Step2Handler {
         });
 
     }
+    getUserType(){
+        const step1 = DataManager.getData("stepData_1");
+        const normalized = {
+            "A business": "Business",
+            "A trust": "Trust",
+            "Individual": "Individual"
+            };
+
+        this.userType = normalized[step1?.s1q7];
+    }
     onActivate() {
-        console.log("on activate")
+        this.getUserType();
         this.clearTaxLinesTable();
         this.populateTaxLines();
+        this.setYearOrFiscalField();
+    }
+
+    
+    setYearOrFiscalField() {
+
+        if (!this.userType) return;
+
+        if (this.userType === "Business") {
+            this.taxYearsFieldset.classList.add("hidden");
+            this.fiscalFieldset.classList.remove("hidden");
+        } else {
+            this.taxYearsFieldset.classList.remove("hidden");
+            this.fiscalFieldset.classList.add("hidden");
+        }
+    }
+
+    addTaxYearInput() {
+        this.taxYearCount++;
+        const newInput = document.createElement("input");
+        newInput.type = "number";
+        newInput.id = "s2q3-field";
+        newInput.name = "s2q3";
+        newInput.min = "1900"
+        newInput.max = "2100"
+        newInput.dataset.array = "true";
+        newInput.classList.add("tax-year-input", "quarter-width");
+        this.taxYearsContainer.appendChild(newInput);
+       
+     
     }
     
     clearTaxLinesTable() {
@@ -301,18 +379,11 @@ class Step2Handler {
         const dropdown = this.searchDropdown;
         dropdown.innerHTML = ""; // clear existing
 
-        // Get user type from session storage
-        const step1 = DataManager.getData("stepData_1");
-        const normalized = {
-            "A business": "Business",
-            "A trust": "Trust",
-            "Individual": "Individual"
-            };
-        const userType = normalized[step1?.s1q7];
+        
        
-        if (!userType || !this.taxLineLists[userType]) return;
+        if (!this.userType || !this.taxLineLists[this.userType]) return;
 
-        this.taxLineLists[userType].forEach(item => {
+        this.taxLineLists[this.userType].forEach(item => {
             const opt = document.createElement("option");
             opt.value = item.value;
             opt.dataset.description = item.description;
@@ -473,6 +544,13 @@ class Step3Handler {
                         rows: value
                     };
                     return; // skip adding s2q5_lines to main data table
+                }
+
+                if (key === "s1biz-accountype") {
+                    const select = document.getElementById("s1biz-accountype"); // your select input
+                    if (select) {
+                        value = select.selectedOptions[0]?.text || value;
+                    }
                 }
 
                 // Format dates
