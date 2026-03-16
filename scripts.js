@@ -201,48 +201,80 @@ class Stepper {
 class Step1Handler {
     constructor() {
         this.businessTypeDropdown = document.getElementById("s1biz-accountype");
-        this.accountFieldset = document.getElementById("s1biz-bn4-fieldset");
-        this.accountNumberInput = document.getElementById("s1biz-BN4");
-        this.accountLabel = this.accountFieldset.querySelector("label[for='s1biz-BN4']");
-        this.prefixDiv = this.accountFieldset.querySelector(".prefix");
+        this.individualTaxTypeDropdown = document.getElementById("s1ind-taxtype")
+        this.accountFieldset = document.getElementById("s1biz-bn-fieldset");
+        this.indThirdPartyNumber = document.getElementById("s1-ind-thirdpartyref-fieldset");
+        this.bizThirdPartyNumber = document.getElementById("s1-biz-thirdpartyref-fieldset");
+        
+        this.bn9Field = document.getElementById("s1biz-bn-wrapper");
+        this.bnFreeFormField = document.getElementById("s1biz-bnfreeform")
+        this.prefixDiv = this.accountFieldset.querySelector(".static");
 
+        this.individualTaxTypeDropdown.addEventListener("change", () => {
+           
+                this.thirdPartyDisplay(1, this.individualTaxTypeDropdown.value);
+            
+        });
         this.businessTypeDropdown.addEventListener("change", () => {
-            this.updateAccountField(this.businessTypeDropdown.value);
+           
+                this.updateAccountField(this.businessTypeDropdown.value);
+                this.thirdPartyDisplay(2, this.businessTypeDropdown.value);
         });
     }
 
+    thirdPartyDisplay(flow, selectedValue) {
+        if (selectedValue === "thirdparty") {
+            if(flow === 1) {
+                this.indThirdPartyNumber.classList.remove("hidden");
+                this.bizThirdPartyNumber.classList.add("hidden");
+                this.bnFreeFormField.classList.add("hidden");
+                this.bn9Field.classList.add("hidden");
+            }
+            else {
+                this.bizThirdPartyNumber.classList.remove("hidden");
+                this.indThirdPartyNumber.classList.add("hidden");
+                this.bnFreeFormField.classList.remove("hidden");
+                this.bn9Field.classList.add("hidden");
+
+
+            }
+        }
+        else {
+            this.indThirdPartyNumber.classList.add("hidden");
+            this.bizThirdPartyNumber.classList.add("hidden");
+            this.bnFreeFormField.classList.add("hidden");
+            this.bn9Field.classList.remove("hidden");
+
+        }
+             
+    }
    updateAccountField(selectedValue) {
+
+        if(selectedValue !== "thirdparty"){
         // Update the prefix div
-        this.prefixDiv.textContent = selectedValue || "";
+                this.prefixDiv.textContent = selectedValue || "";
 
-        // Get the data-name of the selected option
-        const selectedOption = this.businessTypeDropdown.selectedOptions[0];
-        const dataName = selectedOption ? selectedOption.dataset.name : "";
+                // Show/hide the fieldset
+                if (selectedValue) {
+                    this.accountFieldset.classList.remove("hidden");
+                } else {
+                    this.accountFieldset.classList.add("hidden");
+                }
+        }
+        else {
 
-        // Preserve the asterisk span if it exists
-        const asterisk = this.accountLabel.querySelector(".label-ast");
-        if (dataName) {
-            this.accountLabel.textContent = `${dataName} account number (4 digits)`;
-        } else {
-            this.accountLabel.textContent = "account number (4 digits)";
         }
-        if (asterisk) {
-            this.accountLabel.insertBefore(asterisk, this.accountLabel.firstChild);
-        }
-
-        // Show/hide the fieldset
-        if (selectedValue) {
-            this.accountFieldset.classList.remove("hidden");
-        } else {
-            this.accountFieldset.classList.add("hidden");
-        }
-}
+        
+        
+        
+    }
 }
 class Step2Handler {
     constructor() {
 
         this.noticeTypeSelection = document.querySelectorAll('input[name="s2q1"]');
         this.noticeDateField = document.getElementById("s2-noticedate-field");
+        this.noticeDateLabel = this.noticeDateField.parentElement.querySelector('label');
         this.extensionFieldset = document.getElementById("s2-timeextension-fieldset");
 
         this.userType = this.getUserType();
@@ -294,9 +326,8 @@ class Step2Handler {
         document.querySelectorAll('input[name="s2q1"]').forEach(input => {
             input.addEventListener("change", () => {
                 this.noticeDateField.value = "";
-                if (this.noticeDateField.value) {
-                    this.checkNoticeType();
-                }
+                this.checkNoticeType();
+                
             });
         });  
         this.noticeDateField.addEventListener("change", () => {
@@ -393,6 +424,7 @@ class Step2Handler {
     }
     checkNoticeType() {
         const selected = document.querySelector('input[name="s2q1"]:checked');
+       
         if (!selected) return;
        
 
@@ -402,7 +434,20 @@ class Step2Handler {
         const provinceFieldset = document.getElementById("s2q4-fieldset");
         const taxLineFieldset = document.getElementById("s2q5-fieldset");
 
+       
+        const asterisk = this.noticeDateLabel.querySelector(".label-ast");
+        // Always rebuild the label text from a stable prefix
+        const prefix = "Date on notice of ";
+       
+
         if (isDetermination) {
+           
+            this.noticeDateLabel.textContent = `${prefix}determination or redetermination`;
+            // Re-insert the asterisk at the front if it existed
+            if (asterisk) {
+                 this.noticeDateLabel.insertBefore(asterisk,  this.noticeDateLabel.firstChild);
+            }
+
             provinceFieldset.classList.add("hidden");
             taxLineFieldset.classList.add("hidden");
              // clear province
@@ -413,6 +458,15 @@ class Step2Handler {
             this.taxLinesTable.rows = [];
             this.taxLinesTable.refreshTable();
         } 
+        else {
+            this.noticeDateLabel.textContent = `${prefix}assessment or reassessment`;
+            // Re-insert the asterisk at the front if it existed
+            if (asterisk) {
+                 this.noticeDateLabel.insertBefore(asterisk,  this.noticeDateLabel.firstChild);
+            }
+
+
+        }
     }
     handleNoticeDateChange() {
         const dateValue = this.noticeDateField.value;
