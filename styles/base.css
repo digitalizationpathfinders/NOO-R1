@@ -722,6 +722,9 @@ textarea {
   /* box-sizing:border-box; */
 }
 
+.address-field {
+  height:100px!important;
+}
 
 .group{
   display: flex;

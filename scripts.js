@@ -296,15 +296,45 @@ class Step2Handler {
 
         this.taxLineLists = {
             Individual: [
-                { value: "15000", description: "Total income" },
-                { value: "23600", description: "Net federal tax" },
-                { value: "12000", description: "Employment income" }
+                { value: "12600", description: "Net rental income" },
+                { value: "22100", description: "Carrying charges and interest expenses" },
+                { value: "22900", description: "Other employment expenses" },
+                { value: "23200", description: "Other deductions" },
+                { value: "13800", description: "Gain (or loss) - Real estate, depreciable property, and other properties" },
+                { value: "13000", description: "Other income" },
+                { value: "10100", description: "Employment Income (box 14 on all T4 slips)" },
+                { value: "12000", description: "Taxable amount of dividends from taxable Canadian corporations" },
+                { value: "12100", description: "Interest and other investment income" },
+                { value: "21900", description: "Moving expenses" },
+                { value: "21400", description: "Child care expenses" },
+                { value: "24500", description: "Total contributions made to your RRSP or your spouse or common-law partner's RRSP" },
+                { value: "20800", description: "RRSP deduction" },
+                { value: "33099", description: "Medical expenses" },
+                { value: "34000", description: "Allowable charitable donations and government gifts" },
+                { value: "31270", description: "Home buyer's amount" },
+                { value: "17900", description: "Principal residence designation" },
             ],
-            Business: [
-                { value: "3640", description: "Total liabilities and shareholder equity" },
-                { value: "3680", description: "Net income/loss" },
-                { value: "1000", description: "Revenue" }
-            ],
+            Business: [             
+                { value: "90", description: "Taxable sales (including zero-rated supplies) made in Canada" },
+                { value: "91", description: "Exempt supplies, zero-rated exports, and other sales and revenue" },
+                { value: "101", description: "Total sales and other revenue" },
+                { value: "102", description: "Your associates’ taxable sales (including zero-rated supplies) made in Canada" },
+                { value: "135", description: "Total GST/HST new housing rebates" },
+                { value: "136", description: "Deduction for pension rebate amount" },
+                { value: "103", description: "GST/HST collected or that became collectible in the reporting period" },
+                { value: "104", description: "Adjustments to be added to the net tax for the reporting period" },
+                { value: "105", description: "Total GST/HST and adjustments for this period" },
+                { value: "106", description: "ITCs for the current period and unclaimed ITCs from a previous period" },
+                { value: "107", description: "Adjustments to be deducted when determining the net tax for the reporting period" },
+                { value: "108", description: "Total ITCs and adjustments" },
+                { value: "109", description: "Net tax" },
+                { value: "110", description: "Instalments and other annual filer payments" },
+                { value: "111", description: "Rebates" },
+                { value: "205", description: "GST/HST due on purchases of real property or purchases of emission allowances" },
+                { value: "405", description: "Other GST/HST to be self-assessed" },
+                { value: "114", description: "Refund claimed" },
+                { value: "115", description: "Amount owing" }
+],
             Trust: [
                 { value: "1", description: "Trust income" },
                 { value: "10", description: "Taxable capital gains" }
