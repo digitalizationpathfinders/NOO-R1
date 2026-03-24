@@ -296,6 +296,8 @@ class Step2Handler {
 
         this.taxLineLists = {
             Individual: [
+                
+                { value: "15000", description: "Total income" },
                 { value: "12600", description: "Net rental income" },
                 { value: "22100", description: "Carrying charges and interest expenses" },
                 { value: "22900", description: "Other employment expenses" },
@@ -305,10 +307,12 @@ class Step2Handler {
                 { value: "10100", description: "Employment Income (box 14 on all T4 slips)" },
                 { value: "12000", description: "Taxable amount of dividends from taxable Canadian corporations" },
                 { value: "12100", description: "Interest and other investment income" },
+                { value: "43700", description: "Total income tax deducted" },
                 { value: "21900", description: "Moving expenses" },
                 { value: "21400", description: "Child care expenses" },
                 { value: "24500", description: "Total contributions made to your RRSP or your spouse or common-law partner's RRSP"},
                 { value: "20800", description: "RRSP deduction" },
+                { value: "603600", description: "Home renovation expenses" },
                 { value: "33099", description: "Medical expenses" },
                 { value: "34000", description: "Allowable charitable donations and government gifts" },
                 { value: "31270", description: "Home buyer's amount" },
