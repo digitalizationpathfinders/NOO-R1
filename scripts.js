@@ -307,7 +307,7 @@ class Step2Handler {
                 { value: "12100", description: "Interest and other investment income" },
                 { value: "21900", description: "Moving expenses" },
                 { value: "21400", description: "Child care expenses" },
-                { value: "24500", description: "Total contributions made to your RRSP or your spouse or common-law partner's RRSP" },
+                { value: "24500", description: "Total contributions made to your RRSP or your spouse or common-law partner's RRSP"},
                 { value: "20800", description: "RRSP deduction" },
                 { value: "33099", description: "Medical expenses" },
                 { value: "34000", description: "Allowable charitable donations and government gifts" },

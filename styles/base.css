@@ -877,6 +877,8 @@ textarea {
   border-radius:6px;
   border:1px solid #000;
   padding:8px;
+  overflow: scroll;
+  height:300px;
 }
 .search-dropdown option{
   margin:4px;
